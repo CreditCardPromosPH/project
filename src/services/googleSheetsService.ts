@@ -20,7 +20,7 @@ const HEADER_MAPPING: Record<string, string> = {
   'Bank': 'bank',
   'Category': 'category',
   'Promo_Image': 'image',
-  'Promo_Period': 'validUntil',
+  'Expiry_Date': 'validUntil',
   'Promo_URL': 'externalLink',
   'Status': 'status'
 };
@@ -63,9 +63,24 @@ export const fetchPromosFromGoogleSheets = async () => {
           } else if (mappedKey === 'validUntil' && value) {
             // Try to parse the date, fallback to original value if parsing fails
             try {
-              const date = new Date(value);
+              // First try to parse as is
+              let date = new Date(value);
+              
+              // If that fails, try common date formats
+              if (isNaN(date.getTime())) {
+                // Try MM/DD/YYYY format
+                const parts = value.split('/');
+                if (parts.length === 3) {
+                  date = new Date(`${parts[2]}-${parts[0].padStart(2, '0')}-${parts[1].padStart(2, '0')}`);
+                }
+              }
+              
               if (!isNaN(date.getTime())) {
-                promo[mappedKey] = date.toISOString().split('T')[0]; // Format as YYYY-MM-DD
+                // Format as YYYY-MM-DD
+                const year = date.getFullYear();
+                const month = String(date.getMonth() + 1).padStart(2, '0');
+                const day = String(date.getDate()).padStart(2, '0');
+                promo[mappedKey] = `${year}-${month}-${day}`;
               } else {
                 promo[mappedKey] = value;
               }
