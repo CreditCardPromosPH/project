@@ -41,21 +41,26 @@ export const fetchPromosFromGoogleSheets = async () => {
 
     const data = await response.json();
     
+    // Debug logging for headers and first row
+    console.log('Headers from Google Sheets:', data.values[0]);
+    console.log('First row of data:', data.values[1]);
+    
     // Process the data
     // Assuming the first row contains headers
     const headers = data.values[0];
     const rows = data.values.slice(1);
     
-    return rows.map((row: any[]) => {
+    const processedPromos = rows.map((row: any[]) => {
       const promo: any = {};
-      let isActive = false;
+      let status = '';
       
       headers.forEach((header: string, index: number) => {
+        const value = row[index];
+        console.log(`Processing header: ${header}, value: ${value}`);
+        
         // Only process headers that are in our mapping
         const mappedKey = HEADER_MAPPING[header];
         if (mappedKey) {
-          const value = row[index];
-          
           // Handle boolean fields
           if (value === 'TRUE' || value === 'true') {
             promo[mappedKey] = true;
@@ -67,11 +72,11 @@ export const fetchPromosFromGoogleSheets = async () => {
           } else {
             promo[mappedKey] = value || '';
           }
-
-          // Check if this is the Status field and if it's "Active"
-          if (header === 'Status' && value === 'Active') {
-            isActive = true;
-          }
+        }
+        
+        // Store the Status value separately
+        if (header === 'Status') {
+          status = value || '';
         }
       });
       
@@ -81,9 +86,11 @@ export const fetchPromosFromGoogleSheets = async () => {
       }
       
       // Only return the promo if it's active
-      return isActive ? promo : null;
+      return status === 'Active' ? promo : null;
     }).filter(Boolean); // Remove null entries
     
+    console.log('Processed promos:', processedPromos);
+    return processedPromos;
   } catch (error) {
     console.error('Error fetching data from Google Sheets:', error);
     throw error;
