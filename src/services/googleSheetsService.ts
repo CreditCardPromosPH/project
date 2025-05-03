@@ -48,6 +48,7 @@ export const fetchPromosFromGoogleSheets = async () => {
     
     return rows.map((row: any[]) => {
       const promo: any = {};
+      let isActive = false;
       
       headers.forEach((header: string, index: number) => {
         // Only process headers that are in our mapping
@@ -66,6 +67,11 @@ export const fetchPromosFromGoogleSheets = async () => {
           } else {
             promo[mappedKey] = value || '';
           }
+
+          // Check if this is the Status field and if it's "Active"
+          if (header === 'Status' && value === 'Active') {
+            isActive = true;
+          }
         }
       });
       
@@ -74,8 +80,9 @@ export const fetchPromosFromGoogleSheets = async () => {
         promo.id = crypto.randomUUID();
       }
       
-      return promo;
-    });
+      // Only return the promo if it's active
+      return isActive ? promo : null;
+    }).filter(Boolean); // Remove null entries
     
   } catch (error) {
     console.error('Error fetching data from Google Sheets:', error);
