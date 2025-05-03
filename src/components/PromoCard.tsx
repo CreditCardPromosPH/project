@@ -10,15 +10,10 @@ interface PromoCardProps {
 }
 
 const PromoCard: React.FC<PromoCardProps> = ({ promo, featured = false }) => {
-  const formattedDate = new Date(promo.validUntil).toLocaleDateString('en-US', {
-    year: 'numeric',
-    month: 'short',
-    day: 'numeric',
-  });
+  const formattedDate = promo.validUntil;
   
   const isExpiringSoon = () => {
-    const daysLeft = Math.ceil((new Date(promo.validUntil).getTime() - new Date().getTime()) / (1000 * 60 * 60 * 24));
-    return daysLeft <= 7 && daysLeft > 0;
+    return false;
   };
 
   return (

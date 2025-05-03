@@ -92,15 +92,11 @@ const PromoDetailsPage: React.FC = () => {
     );
   }
 
-  // Format date
-  const formattedDate = new Date(promo.validUntil).toLocaleDateString('en-US', {
-    year: 'numeric',
-    month: 'long',
-    day: 'numeric',
-  });
+  // Remove date formatting and just use the raw value
+  const formattedDate = promo.validUntil;
   
-  // Calculate days left
-  const daysLeft = Math.ceil((new Date(promo.validUntil).getTime() - new Date().getTime()) / (1000 * 60 * 60 * 24));
+  // Remove days left calculation since we're not parsing dates anymore
+  const daysLeft = 0;
   
   return (
     <div className="max-w-4xl mx-auto">
@@ -142,15 +138,6 @@ const PromoDetailsPage: React.FC = () => {
             <div className="flex items-center text-slate-600">
               <Calendar size={18} className="mr-2" />
               <span>Valid until {formattedDate}</span>
-            </div>
-            
-            <div className="flex items-center text-slate-600">
-              <Clock size={18} className="mr-2" />
-              <span>
-                {daysLeft > 0 
-                  ? `${daysLeft} day${daysLeft === 1 ? '' : 's'} left` 
-                  : 'Expired'}
-              </span>
             </div>
             
             <div className="flex items-center text-slate-600">

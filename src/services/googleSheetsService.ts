@@ -61,32 +61,8 @@ export const fetchPromosFromGoogleSheets = async () => {
           } else if (value === 'FALSE' || value === 'false') {
             promo[mappedKey] = false;
           } else if (mappedKey === 'validUntil' && value) {
-            // Try to parse the date, fallback to original value if parsing fails
-            try {
-              // First try to parse as is
-              let date = new Date(value);
-              
-              // If that fails, try common date formats
-              if (isNaN(date.getTime())) {
-                // Try MM/DD/YYYY format
-                const parts = value.split('/');
-                if (parts.length === 3) {
-                  date = new Date(`${parts[2]}-${parts[0].padStart(2, '0')}-${parts[1].padStart(2, '0')}`);
-                }
-              }
-              
-              if (!isNaN(date.getTime())) {
-                // Format as YYYY-MM-DD
-                const year = date.getFullYear();
-                const month = String(date.getMonth() + 1).padStart(2, '0');
-                const day = String(date.getDate()).padStart(2, '0');
-                promo[mappedKey] = `${year}-${month}-${day}`;
-              } else {
-                promo[mappedKey] = value;
-              }
-            } catch {
-              promo[mappedKey] = value;
-            }
+            // Simply pass through the value from Expiry_Date
+            promo[mappedKey] = value;
           } else {
             promo[mappedKey] = value || '';
           }
