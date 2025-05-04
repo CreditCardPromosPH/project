@@ -3,8 +3,20 @@ import { Tag } from 'lucide-react';
 import { usePromos } from '../context/PromoContext';
 
 const CategoryFilter: React.FC = () => {
-  const { categories, filters, setFilters } = usePromos();
-  
+  const { filters, setFilters } = usePromos();
+
+  // ✅ Define fixed categories here
+  const fixedCategories = [
+    'Dining',
+    'Shopping',
+    'Travel & Leisure',
+    'Health & Wellness',
+    'Installments & Financing',
+    'Online',
+    'Welcome Gift',
+    'Others',
+  ];
+
   const handleCategoryClick = (category: string) => {
     setFilters(prev => ({
       ...prev,
@@ -12,7 +24,6 @@ const CategoryFilter: React.FC = () => {
     }));
   };
 
-  // Get a color for each category
   const getCategoryColor = (category: string): string => {
     const colors = [
       'bg-blue-100 text-blue-800',
@@ -24,8 +35,6 @@ const CategoryFilter: React.FC = () => {
       'bg-red-100 text-red-800',
       'bg-orange-100 text-orange-800',
     ];
-    
-    // Use the first character of the category string to determine a consistent index
     const index = category.charCodeAt(0) % colors.length;
     return colors[index];
   };
@@ -34,7 +43,7 @@ const CategoryFilter: React.FC = () => {
     <div>
       <h3 className="text-lg font-semibold mb-3 text-slate-800">Categories</h3>
       <div className="flex flex-wrap gap-2">
-        {categories.map((category) => (
+        {fixedCategories.map((category) => (
           <button
             key={category}
             onClick={() => handleCategoryClick(category)}
