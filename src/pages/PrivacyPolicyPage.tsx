@@ -7,63 +7,80 @@ const PrivacyPolicyPage: React.FC = () => {
       <div className="prose prose-slate max-w-none">
         <p>Last updated: May 5, 2025</p>
 
+        <p className="mt-6">
+          Thank you for visiting <strong>CreditCardPromos.ph</strong> ("we", "our", or "us"). We value your privacy and are committed to protecting any personal information you may share with us. This Privacy Policy outlines how we collect, use, and protect your information when you visit or interact with our website.
+        </p>
+
         <div className="mt-10">
-          <h2 className="font-bold">1. Introduction</h2>
+          <h2 className="font-bold">1. Information We Collect</h2>
           <p>
-            Welcome to CreditCardPromos.ph. We respect your privacy and are committed to protecting your personal data. 
-            This privacy policy will inform you about how we look after your personal data when you visit our website and tell you about your privacy rights.
+            We do not directly collect personal information from users of this website. However, we may collect non-personally identifiable information automatically through third-party services such as:
+          </p>
+          <ul>
+            <li>Google Analytics: to understand website traffic and usage trends.</li>
+            <li>Cookies: to enhance user experience and track anonymous usage data.</li>
+          </ul>
+        </div>
+
+        <div className="mt-10">
+          <h2 className="font-bold">2. How We Use Information</h2>
+          <p>Any data collected is used solely for the following purposes:</p>
+          <ul>
+            <li>To analyze traffic patterns and improve the performance of our website.</li>
+            <li>To maintain the security and functionality of our services.</li>
+            <li>To ensure the accuracy and relevance of the promo listings.</li>
+          </ul>
+          <p>We do not sell, rent, or trade your personal data.</p>
+        </div>
+
+        <div className="mt-10">
+          <h2 className="font-bold">3. Third-Party Services</h2>
+          <p>
+            We may use third-party services (e.g., analytics tools or advertising platforms) that collect data in accordance with their own privacy policies. These services may use cookies or similar tracking technologies.
           </p>
         </div>
 
         <div className="mt-10">
-          <h2 className="font-bold">2. The Data We Collect</h2>
-          <p>We may collect, use, store and transfer different kinds of personal data about you which we have grouped together as follows:</p>
-          <ul>
-            <li>Identity Data includes first name, last name, username or similar identifier.</li>
-            <li>Contact Data includes email address and telephone numbers.</li>
-            <li>Technical Data includes internet protocol (IP) address, your login data, browser type and version, time zone setting and location, browser plug-in types and versions, operating system and platform, and other technology on the devices you use to access this website.</li>
-            <li>Usage Data includes information about how you use our website and services.</li>
-          </ul>
-        </div>
-
-        <div className="mt-10">
-          <h2 className="font-bold">3. How We Use Your Data</h2>
-          <p>We will only use your personal data when the law allows us to. Most commonly, we will use your personal data in the following circumstances:</p>
-          <ul>
-            <li>Where we need to perform the contract we are about to enter into or have entered into with you.</li>
-            <li>Where it is necessary for our legitimate interests (or those of a third party) and your interests and fundamental rights do not override those interests.</li>
-            <li>Where we need to comply with a legal obligation.</li>
-          </ul>
-        </div>
-
-        <div className="mt-10">
-          <h2 className="font-bold">4. Data Security</h2>
+          <h2 className="font-bold">4. Links to Other Websites</h2>
           <p>
-            We have put in place appropriate security measures to prevent your personal data from being accidentally lost, used or accessed in an unauthorized way, altered or disclosed. 
-            In addition, we limit access to your personal data to those employees, agents, contractors and other third parties who have a business need to know.
+            Our website contains links to external sites, particularly official promo pages of banks and credit card issuers. We are not responsible for the privacy practices or content of these third-party websites.
           </p>
         </div>
 
         <div className="mt-10">
-          <h2 className="font-bold">5. Your Legal Rights</h2>
-          <p>Under certain circumstances, you have rights under data protection laws in relation to your personal data, including the right to:</p>
-          <ul>
-            <li>Request access to your personal data.</li>
-            <li>Request correction of your personal data.</li>
-            <li>Request erasure of your personal data.</li>
-            <li>Object to processing of your personal data.</li>
-            <li>Request restriction of processing your personal data.</li>
-            <li>Request transfer of your personal data.</li>
-            <li>Right to withdraw consent.</li>
-          </ul>
+          <h2 className="font-bold">5. Your Rights and Choices</h2>
+          <p>
+            Since we do not collect personal information directly, there is generally no data for you to access, modify, or delete on our end. However, you can manage cookies and tracking preferences in your browser settings.
+          </p>
         </div>
 
         <div className="mt-10">
-          <h2 className="font-bold">6. Contact Us</h2>
+          <h2 className="font-bold">6. Data Security</h2>
           <p>
-            If you have any questions about this privacy policy or our privacy practices, please contact us at:
+            While we do not collect personal data, we take reasonable steps to secure our site and protect it from unauthorized access or alteration.
+          </p>
+        </div>
+
+        <div className="mt-10">
+          <h2 className="font-bold">7. Children’s Privacy</h2>
+          <p>
+            Our site is not directed at children under 13, and we do not knowingly collect any personal information from anyone under the age of 13.
+          </p>
+        </div>
+
+        <div className="mt-10">
+          <h2 className="font-bold">8. Changes to This Privacy Policy</h2>
+          <p>
+            We may update this Privacy Policy from time to time. Any changes will be posted on this page with an updated revision date.
+          </p>
+        </div>
+
+        <div className="mt-10">
+          <h2 className="font-bold">9. Contact Us</h2>
+          <p>
+            If you have any questions or concerns about this Privacy Policy, feel free to contact us at:
             <br />
-            Email: privacy@creditcardpromos.ph
+            Email: creditcardpromosph@gmail.com
           </p>
         </div>
       </div>
