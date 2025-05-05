@@ -44,12 +44,14 @@ const Navbar: React.FC = () => {
               <Link to="/" className="text-slate-700 hover:text-primary-600 transition-colors">
                 Home
               </Link>
+              {/*
               <Link to="/#featured" className="text-slate-700 hover:text-primary-600 transition-colors">
                 Featured
               </Link>
               <Link to="/#banks" className="text-slate-700 hover:text-primary-600 transition-colors">
                 Banks
               </Link>
+              */}
               <Link to="/privacy-policy" className="text-slate-700 hover:text-primary-600 transition-colors">
                 Privacy
               </Link>
