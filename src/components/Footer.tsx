@@ -50,21 +50,16 @@ const Footer: React.FC = () => {
           </div>
           
           <div>
-            <h3 className="text-lg font-semibold mb-4">About</h3>
+            <h3 className="text-lg font-semibold mb-4">Legal</h3>
             <ul className="space-y-2">
               <li>
-                <Link to="#" className="text-slate-300 hover:text-white transition-colors">
-                  How It Works
-                </Link>
-              </li>
-              <li>
-                <Link to="#" className="text-slate-300 hover:text-white transition-colors">
+                <Link to="/privacy-policy" className="text-slate-300 hover:text-white transition-colors">
                   Privacy Policy
                 </Link>
               </li>
               <li>
-                <Link to="#" className="text-slate-300 hover:text-white transition-colors">
-                  Terms of Service
+                <Link to="/terms-of-use" className="text-slate-300 hover:text-white transition-colors">
+                  Terms of Use
                 </Link>
               </li>
             </ul>

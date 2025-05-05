@@ -50,6 +50,12 @@ const Navbar: React.FC = () => {
               <Link to="/#banks" className="text-slate-700 hover:text-primary-600 transition-colors">
                 Banks
               </Link>
+              <Link to="/privacy-policy" className="text-slate-700 hover:text-primary-600 transition-colors">
+                Privacy
+              </Link>
+              <Link to="/terms-of-use" className="text-slate-700 hover:text-primary-600 transition-colors">
+                Terms
+              </Link>
             </div>
           </div>
 
@@ -78,6 +84,12 @@ const Navbar: React.FC = () => {
               </Link>
               <Link to="/#banks" className="text-slate-700 hover:text-primary-600 py-2 transition-colors">
                 Banks
+              </Link>
+              <Link to="/privacy-policy" className="text-slate-700 hover:text-primary-600 py-2 transition-colors">
+                Privacy Policy
+              </Link>
+              <Link to="/terms-of-use" className="text-slate-700 hover:text-primary-600 py-2 transition-colors">
+                Terms of Use
               </Link>
             </div>
           </div>
