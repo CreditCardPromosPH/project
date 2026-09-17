@@ -114,6 +114,7 @@ function PromoImage({ promo }: { promo: Promo }) {
       src={promo.imageUrl}
       alt=""
       loading="lazy"
+      referrerPolicy="no-referrer"
       style={{ backgroundColor: bankColors[promo.bank] ?? "#2457d6" }}
       onError={() => setFailed(true)}
     />
