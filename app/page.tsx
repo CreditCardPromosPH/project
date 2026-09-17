@@ -47,6 +47,19 @@ const bankMarks: Record<string, string> = {
   UnionBank: "UB",
 };
 
+const bankLogos: Record<string, string> = {
+  BDO: "https://raw.githubusercontent.com/paymongo-archive/phlogos/master/logos/bdo/bdo.svg",
+  BPI: "https://raw.githubusercontent.com/paymongo-archive/phlogos/master/logos/bpi/bpi.svg",
+  BankCom: "https://commons.wikimedia.org/wiki/Special:FilePath/Bank%20Of%20Commerce.png?width=120",
+  Chinabank: "https://commons.wikimedia.org/wiki/Special:FilePath/Chinabank%202024.svg?width=180",
+  EastWest: "https://www.eastwestbanker.com/sites/default/files/2026-03/ew-logo.png",
+  Maybank: "https://commons.wikimedia.org/wiki/Special:FilePath/Logo%20wordmark%20Bank%20Maybank%20Indonesia.png?width=220",
+  Metrobank: "https://raw.githubusercontent.com/paymongo-archive/phlogos/master/logos/metrobank/metrobank.svg",
+  RCBC: "https://commons.wikimedia.org/wiki/Special:FilePath/RCBC%20logo.svg?width=120",
+  "Security Bank": "https://raw.githubusercontent.com/paymongo-archive/phlogos/master/logos/security_bank/security_bank.svg",
+  UnionBank: "https://commons.wikimedia.org/wiki/Special:FilePath/UnionBank%20PH%20logo.svg?width=180",
+};
+
 const bankColors: Record<string, string> = {
   BDO: "#12337d",
   BPI: "#d9a820",
@@ -89,7 +102,7 @@ function PromoImage({ promo }: { promo: Promo }) {
   if (!promo.imageUrl || failed) {
     return (
       <div className="promo-image-fallback" style={{ backgroundColor: bankColors[promo.bank] ?? "#2457d6" }}>
-        <span>{bankMarks[promo.bank] ?? promo.bank.slice(0, 2)}</span>
+        <BankMark bank={promo.bank} compact />
       </div>
     );
   }
@@ -107,9 +120,26 @@ function PromoImage({ promo }: { promo: Promo }) {
   );
 }
 
-function BankMark({ bank }: { bank: string }) {
+function BankMark({ bank, compact = false }: { bank: string; compact?: boolean }) {
+  const [failed, setFailed] = useState(false);
+  const logoUrl = bankLogos[bank];
+
+  if (logoUrl && !failed) {
+    return (
+      <span className={`bank-logo-shell${compact ? " compact" : ""}`}>
+        <img
+          className="bank-logo"
+          src={logoUrl}
+          alt=""
+          loading="lazy"
+          onError={() => setFailed(true)}
+        />
+      </span>
+    );
+  }
+
   return (
-    <span className="bank-mark" style={{ color: bankColors[bank] ?? "#2457d6" }}>
+    <span className="bank-mark-fallback" style={{ color: bankColors[bank] ?? "#2457d6" }}>
       {bankMarks[bank] ?? bank.slice(0, 2).toUpperCase()}
     </span>
   );
