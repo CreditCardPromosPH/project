@@ -14,7 +14,11 @@ from openpyxl import load_workbook
 ROOT = Path(__file__).resolve().parents[1]
 SOURCE = ROOT.parent / "Credit Card Promos.xlsx"
 OUTPUT = ROOT / "app" / "data"
-RCBC_IMAGE_CACHE = ROOT / "public" / "promo-images" / "rcbc"
+IMAGE_CACHE_BANKS = {"BPI", "RCBC"}
+IMAGE_URL_OVERRIDES = {
+    "https://www.bpi.com.ph/content/dam/bau/promos/2026-promos/hue,-laud,-wright,-the-aurora/content_card_hue_boracay.jpg_boracay.png":
+        "https://www.bpi.com.ph/content/dam/bau/promos/2026-promos/hue,-laud,-wright,-the-aurora/content_card_hue_boracay.jpg",
+}
 
 
 def scalar(value):
@@ -25,7 +29,7 @@ def scalar(value):
     return "" if value is None else str(value).strip()
 
 
-def cache_rcbc_image(url):
+def cache_bank_image(bank, url):
     if not url.startswith(("http://", "https://")):
         return ""
 
@@ -34,10 +38,11 @@ def cache_rcbc_image(url):
     if extension not in {".jpg", ".jpeg", ".png", ".webp", ".gif"}:
         extension = ".jpg"
     filename = f"{hashlib.sha1(url.encode()).hexdigest()[:16]}{extension}"
-    target = RCBC_IMAGE_CACHE / filename
+    cache_dir = ROOT / "public" / "promo-images" / bank.lower()
+    target = cache_dir / filename
 
     if not target.exists() or target.stat().st_size == 0:
-        RCBC_IMAGE_CACHE.mkdir(parents=True, exist_ok=True)
+        cache_dir.mkdir(parents=True, exist_ok=True)
         encoded_path = urllib.parse.quote(
             urllib.parse.unquote(parsed.path),
             safe="/:@-._~!$&'()*+,;=",
@@ -51,15 +56,15 @@ def cache_rcbc_image(url):
                 payload = response.read()
             if not payload:
                 raise RuntimeError("empty response")
-            with tempfile.NamedTemporaryFile(dir=RCBC_IMAGE_CACHE, delete=False) as temporary:
+            with tempfile.NamedTemporaryFile(dir=cache_dir, delete=False) as temporary:
                 temporary.write(payload)
                 temporary_path = Path(temporary.name)
             temporary_path.replace(target)
         except Exception as error:
-            print(f"Warning: could not cache RCBC image {url}: {error}", file=sys.stderr)
+            print(f"Warning: could not cache {bank} image {url}: {error}", file=sys.stderr)
             return url
 
-    return f"/promo-images/rcbc/{filename}"
+    return f"/promo-images/{bank.lower()}/{filename}"
 
 
 def main():
@@ -89,8 +94,9 @@ def main():
 
         image_url = value(row, "Image")
         image_url = image_url if image_url.startswith(("http://", "https://")) else ""
-        if bank == "RCBC" and image_url:
-            image_url = cache_rcbc_image(image_url)
+        image_url = IMAGE_URL_OVERRIDES.get(image_url, image_url)
+        if bank in IMAGE_CACHE_BANKS and image_url:
+            image_url = cache_bank_image(bank, image_url)
 
         promos.append({
             "id": identifier,
