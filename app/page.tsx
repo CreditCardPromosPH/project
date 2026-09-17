@@ -97,6 +97,7 @@ function getStatus(promo: Promo) {
 }
 
 function PromoImage({ promo }: { promo: Promo }) {
+  const [imageSrc, setImageSrc] = useState(promo.imageUrl);
   const [failed, setFailed] = useState(false);
 
   if (!promo.imageUrl || failed) {
@@ -111,12 +112,19 @@ function PromoImage({ promo }: { promo: Promo }) {
     // Scraped bank images come from multiple hosts, so the native element preserves their source URLs.
     <img
       className="promo-image"
-      src={promo.imageUrl}
+      src={imageSrc}
       alt=""
       loading="lazy"
       referrerPolicy="no-referrer"
       style={{ backgroundColor: bankColors[promo.bank] ?? "#2457d6" }}
-      onError={() => setFailed(true)}
+      onError={() => {
+        if (imageSrc === promo.imageUrl) {
+          const separator = promo.imageUrl.includes("?") ? "&" : "?";
+          setImageSrc(`${promo.imageUrl}${separator}retry=1`);
+        } else {
+          setFailed(true);
+        }
+      }}
     />
   );
 }
