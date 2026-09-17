@@ -134,11 +134,8 @@ function isCreditCardPromo(promo: Promo) {
   return promo.cardTypes.toLowerCase().includes("credit");
 }
 
-function isActivePromo(promo: Promo) {
-  if (!promo.endDate) return true;
-  const today = new Date();
-  today.setHours(0, 0, 0, 0);
-  return new Date(`${promo.endDate.slice(0, 10)}T00:00:00`) >= today;
+function isConfirmedCurrentPromo(promo: Promo) {
+  return promo.dateCheck === "End date not passed";
 }
 
 function directoryUrl(params: Record<string, string>) {
@@ -160,7 +157,7 @@ function pickFeaturedPromo(promos: Promo[], category: string) {
     .sort((a, b) => (a.endDate ?? "9999-12-31").localeCompare(b.endDate ?? "9999-12-31"))[0];
 }
 
-const creditPromos = promoData.filter((promo) => isCreditCardPromo(promo) && isActivePromo(promo));
+const creditPromos = promoData.filter((promo) => isCreditCardPromo(promo) && isConfirmedCurrentPromo(promo));
 const bankCounts = countBy(creditPromos, (promo) => [promo.bank]).slice(0, 10);
 const categoryCounts = countBy(creditPromos, (promo) => promo.categories).slice(0, 9);
 const sourceCheckedDate = formatLongDate(promoMeta.checkedAt);
@@ -278,7 +275,7 @@ export default function CreditCardPromosPhilippinesPage() {
           <aside className="guide-stats" aria-label="Credit card promo coverage">
             <div>
               <strong>{creditPromos.length.toLocaleString()}</strong>
-              <span>active credit card promos tracked</span>
+              <span>confirmed current credit card promos tracked</span>
             </div>
             <div>
               <strong>{bankCounts.length}</strong>
@@ -354,7 +351,7 @@ export default function CreditCardPromosPhilippinesPage() {
               <a className="bank-guide-row" href={directoryUrl({ bank })} key={bank}>
                 <span className="bank-dot" style={{ backgroundColor: bankColors[bank] ?? "#2457d6" }} />
                 <span>{bank}</span>
-                <strong>{count.toLocaleString()} active credit card promos</strong>
+                <strong>{count.toLocaleString()} confirmed current credit card promos</strong>
                 <ArrowRight size={16} />
               </a>
             ))}
@@ -409,8 +406,9 @@ export default function CreditCardPromosPhilippinesPage() {
           <div className="methodology-copy">
             <p>
               CreditCardPromos.ph tracks promos from Philippine bank promo pages and organizes them by bank,
-              category, dates, and source links. This page uses that structured directory to group credit card
-              offers into practical search intents such as dining, travel, shopping, installments, and welcome gifts.
+              category, dates, and source links. The counts on this page include credit card promos whose end date
+              was confirmed as not passed during the latest data check; offers with unclear dates are kept in the
+              directory, but not counted as confirmed current here.
             </p>
             <p>
               Promo summaries are meant for comparison. Final eligibility, card coverage, rewards, exclusions,
