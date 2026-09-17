@@ -219,8 +219,7 @@ export default function Home() {
       <header className="site-header">
         <div className="site-header-inner">
           <a className="brand" href="#top" aria-label="Credit Card Promos home">
-            <span className="brand-icon" aria-hidden="true"><span /></span>
-            <span>CreditCardPromos.ph</span>
+            <img className="brand-logo" src="/logo.svg" alt="" width="720" height="180" />
           </a>
 
           <nav className="desktop-nav" aria-label="Primary navigation">

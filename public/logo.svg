@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 180" role="img" aria-labelledby="title desc">
+  <title id="title">CreditCardPromos.ph card and tag logo</title>
+  <desc id="desc">A blue credit card icon with a gold promo tag and CreditCardPromos.ph wordmark.</desc>
+  <rect width="720" height="180" rx="28" fill="#ffffff"/>
+  <g transform="translate(36 38)">
+    <rect x="0" y="18" width="126" height="84" rx="17" fill="#2457d6"/>
+    <rect x="16" y="37" width="94" height="10" rx="5" fill="#ffffff" opacity=".9"/>
+    <rect x="18" y="70" width="33" height="10" rx="5" fill="#ffffff" opacity=".76"/>
+    <rect x="61" y="70" width="26" height="10" rx="5" fill="#ffffff" opacity=".5"/>
+    <path d="M94 0h45c7 0 13 6 13 13v45c0 4-2 8-5 11l-45 45c-5 5-14 5-19 0L50 81c-5-5-5-14 0-19l45-45c3-3 7-5 11-5Z" fill="#f4b740"/>
+    <circle cx="121" cy="31" r="8" fill="#ffffff"/>
+    <path d="M85 63h34" stroke="#1d2a43" stroke-width="8" stroke-linecap="round"/>
+    <path d="M84 83h22" stroke="#1d2a43" stroke-width="8" stroke-linecap="round" opacity=".7"/>
+  </g>
+  <g fill="#1d2a43" font-family="Arial, Helvetica, sans-serif">
+    <text x="220" y="91" font-size="43" font-weight="800" letter-spacing="0">CreditCardPromos</text>
+    <text x="605" y="91" font-size="43" font-weight="700" fill="#2457d6">.ph</text>
+    <text x="222" y="124" font-size="17" font-weight="700" fill="#65748d">Philippine credit card deals, made easy</text>
+  </g>
+</svg>

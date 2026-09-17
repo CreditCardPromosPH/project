@@ -9,8 +9,7 @@ export default function LegalPage({ title, children }: { title: string; children
       <header className="site-header legal-header">
         <div className="site-header-inner">
           <Link className="brand" href="/" aria-label="Credit Card Promos home">
-            <span className="brand-icon" aria-hidden="true"><span /></span>
-            <span>CreditCardPromos.ph</span>
+            <img className="brand-logo" src="/logo.svg" alt="" width="720" height="180" />
           </Link>
           <Link className="legal-back-link" href="/"><ArrowLeft size={17} /> Back to promos</Link>
         </div>
