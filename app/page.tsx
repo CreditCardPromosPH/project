@@ -226,8 +226,8 @@ export default function Home() {
 
           <nav className="desktop-nav" aria-label="Primary navigation">
             <a href="#top">Home</a>
-            <a href="https://www.creditcardpromos.ph/privacy-policy" target="_blank" rel="noreferrer">Privacy</a>
-            <a href="https://www.creditcardpromos.ph/terms-of-use" target="_blank" rel="noreferrer">Terms</a>
+            <a href="/privacy-policy">Privacy</a>
+            <a href="/terms-of-use">Terms</a>
           </nav>
           <button className="mobile-menu-button" onClick={() => setMobileMenuOpen((open) => !open)} aria-label="Toggle menu" aria-expanded={mobileMenuOpen}>
             <Menu size={22} />
@@ -236,8 +236,8 @@ export default function Home() {
         {mobileMenuOpen && (
           <nav className="mobile-nav" aria-label="Mobile navigation">
             <a href="#top" onClick={() => setMobileMenuOpen(false)}>Home</a>
-            <a href="https://www.creditcardpromos.ph/privacy-policy" target="_blank" rel="noreferrer" onClick={() => setMobileMenuOpen(false)}>Privacy</a>
-            <a href="https://www.creditcardpromos.ph/terms-of-use" target="_blank" rel="noreferrer" onClick={() => setMobileMenuOpen(false)}>Terms</a>
+            <a href="/privacy-policy" onClick={() => setMobileMenuOpen(false)}>Privacy</a>
+            <a href="/terms-of-use" onClick={() => setMobileMenuOpen(false)}>Terms</a>
           </nav>
         )}
       </header>
