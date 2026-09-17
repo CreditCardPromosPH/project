@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import {
   CalendarDays,
   Check,
@@ -176,6 +176,24 @@ export default function Home() {
     return [...counts.entries()].sort((a, b) => b[1] - a[1]);
   }, []);
 
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const requestedBanks = params.getAll("bank").flatMap((value) => value.split(",")).filter(Boolean);
+    const requestedCategories = params.getAll("category").flatMap((value) => value.split(",")).filter(Boolean);
+    const validBanks = new Set(promoData.map((promo) => promo.bank));
+    const validCategories = new Set(promoData.flatMap((promo) => promo.categories));
+    const nextBanks = requestedBanks.filter((bank) => validBanks.has(bank));
+    const nextCategories = requestedCategories.filter((category) => validCategories.has(category));
+    const nextQuery = params.get("q");
+    const nextSort = params.get("sort");
+
+    if (nextBanks.length) setSelectedBanks([...new Set(nextBanks)]);
+    if (nextCategories.length) setSelectedCategories([...new Set(nextCategories)]);
+    if (nextQuery) setQuery(nextQuery);
+    if (nextSort && ["ending", "newest", "bank", "title"].includes(nextSort)) setSort(nextSort);
+    if (nextBanks.length || nextCategories.length || nextQuery) setDisplayLimit(40);
+  }, []);
+
   const filteredPromos = useMemo(() => {
     const normalizedQuery = query.trim().toLowerCase();
     const result = promoData.filter((promo) => {
@@ -224,6 +242,7 @@ export default function Home() {
 
           <nav className="desktop-nav" aria-label="Primary navigation">
             <a href="#top">Home</a>
+            <a href="/credit-card-promos-philippines">Guide</a>
             <a href="/privacy-policy">Privacy</a>
             <a href="/terms-of-use">Terms</a>
           </nav>
@@ -234,6 +253,7 @@ export default function Home() {
         {mobileMenuOpen && (
           <nav className="mobile-nav" aria-label="Mobile navigation">
             <a href="#top" onClick={() => setMobileMenuOpen(false)}>Home</a>
+            <a href="/credit-card-promos-philippines" onClick={() => setMobileMenuOpen(false)}>Guide</a>
             <a href="/privacy-policy" onClick={() => setMobileMenuOpen(false)}>Privacy</a>
             <a href="/terms-of-use" onClick={() => setMobileMenuOpen(false)}>Terms</a>
           </nav>
