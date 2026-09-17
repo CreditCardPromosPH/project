@@ -251,10 +251,11 @@ export default function Home() {
 
       <div className="page-content" id="top">
         <section className="page-heading">
-          <div>
-            <p className="eyebrow">Updated from bank promo pages</p>
-            <h1>All Promotions</h1>
-            <p className="results-note">{filteredPromos.length.toLocaleString()} promotions across {banks.length} banks</p>
+          <div className="hero-copy">
+            <p className="eyebrow">Philippine credit card promos</p>
+            <h1>Find your next <span>card perk</span></h1>
+            <p className="hero-description">Browse current offers from Philippine banks, all in one place.</p>
+            <p className="results-note">{filteredPromos.length.toLocaleString()} current promotions across {banks.length} banks</p>
           </div>
           <button className={`filter-toggle ${filtersOpen ? "is-open" : ""}`} onClick={() => setFiltersOpen((open) => !open)} aria-expanded={filtersOpen}>
             <Filter size={20} />
