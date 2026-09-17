@@ -3,6 +3,10 @@ import hashlib
 import json
 import re
 from pathlib import Path
+import sys
+import tempfile
+import urllib.parse
+import urllib.request
 
 from openpyxl import load_workbook
 
@@ -10,6 +14,7 @@ from openpyxl import load_workbook
 ROOT = Path(__file__).resolve().parents[1]
 SOURCE = ROOT.parent / "Credit Card Promos.xlsx"
 OUTPUT = ROOT / "app" / "data"
+RCBC_IMAGE_CACHE = ROOT / "public" / "promo-images" / "rcbc"
 
 
 def scalar(value):
@@ -18,6 +23,43 @@ def scalar(value):
     if isinstance(value, date):
         return value.isoformat()
     return "" if value is None else str(value).strip()
+
+
+def cache_rcbc_image(url):
+    if not url.startswith(("http://", "https://")):
+        return ""
+
+    parsed = urllib.parse.urlsplit(url)
+    extension = Path(urllib.parse.unquote(parsed.path)).suffix.lower()
+    if extension not in {".jpg", ".jpeg", ".png", ".webp", ".gif"}:
+        extension = ".jpg"
+    filename = f"{hashlib.sha1(url.encode()).hexdigest()[:16]}{extension}"
+    target = RCBC_IMAGE_CACHE / filename
+
+    if not target.exists() or target.stat().st_size == 0:
+        RCBC_IMAGE_CACHE.mkdir(parents=True, exist_ok=True)
+        encoded_path = urllib.parse.quote(
+            urllib.parse.unquote(parsed.path),
+            safe="/:@-._~!$&'()*+,;=",
+        )
+        request_url = urllib.parse.urlunsplit(
+            (parsed.scheme, parsed.netloc, encoded_path, parsed.query, parsed.fragment)
+        )
+        try:
+            request = urllib.request.Request(request_url, headers={"User-Agent": "Mozilla/5.0"})
+            with urllib.request.urlopen(request, timeout=30) as response:
+                payload = response.read()
+            if not payload:
+                raise RuntimeError("empty response")
+            with tempfile.NamedTemporaryFile(dir=RCBC_IMAGE_CACHE, delete=False) as temporary:
+                temporary.write(payload)
+                temporary_path = Path(temporary.name)
+            temporary_path.replace(target)
+        except Exception as error:
+            print(f"Warning: could not cache RCBC image {url}: {error}", file=sys.stderr)
+            return url
+
+    return f"/promo-images/rcbc/{filename}"
 
 
 def main():
@@ -45,6 +87,11 @@ def main():
         categories = [part.strip() for part in re.split(r"\s*;\s*", categories_raw) if part.strip()]
         identifier = hashlib.sha1(f"{bank}|{promo}|{offer_url}|{row}".encode()).hexdigest()[:16]
 
+        image_url = value(row, "Image")
+        image_url = image_url if image_url.startswith(("http://", "https://")) else ""
+        if bank == "RCBC" and image_url:
+            image_url = cache_rcbc_image(image_url)
+
         promos.append({
             "id": identifier,
             "bank": bank,
@@ -57,7 +104,7 @@ def main():
             "dateCheck": value(row, "Date check"),
             "cardTypes": value(row, "Card types (listing)"),
             "offerUrl": offer_url if offer_url.startswith(("http://", "https://")) else "",
-            "imageUrl": value(row, "Image") if value(row, "Image").startswith(("http://", "https://")) else "",
+            "imageUrl": image_url,
             "originalDateWording": value(row, "Original date wording"),
             "checkedDate": value(row, "Checked date"),
             "dateAdded": value(row, "Date added") or None,
