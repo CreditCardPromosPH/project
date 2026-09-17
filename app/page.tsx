@@ -243,7 +243,7 @@ export default function Home() {
       <div className="page-content" id="top">
         <section className="page-heading">
           <div className="hero-copy">
-            <h1>Discover the Best <span>Credit Card Promos</span></h1>
+            <h1>Never Miss a <span>Credit Card Deal Again</span></h1>
             <p className="hero-description">Browse current offers from Philippine banks, all in one place.</p>
             <p className="results-note">{filteredPromos.length.toLocaleString()} current promotions across {banks.length} banks</p>
           </div>
