@@ -55,6 +55,8 @@ h1 { margin: 0; font-size: clamp(34px, 4vw, 50px); line-height: 1; letter-spacin
 .filter-toggle { display: inline-flex; align-items: center; gap: 10px; min-height: 52px; padding: 0 21px; border: 2px solid var(--blue); border-radius: 12px; color: #31415d; background: white; font-size: 18px; font-weight: 700; }
 .filter-toggle:hover, .filter-toggle.is-open { background: #f1f5ff; color: var(--blue-dark); }
 .filter-count { min-width: 23px; height: 23px; display: inline-grid; place-items: center; border-radius: 50%; color: white; background: var(--blue); font-size: 13px; }
+.filter-panel-collapsed { width: 100%; min-height: 72px; display: flex; align-items: center; justify-content: center; gap: 10px; margin-top: 28px; border: 1px dashed #b9c9e1; border-radius: 16px; color: var(--blue); background: white; font-weight: 800; }
+.filter-panel-collapsed:hover { border-color: var(--blue); background: #f1f5ff; color: var(--blue-dark); }
 .content-search-row { display: flex; align-items: center; justify-content: space-between; gap: 22px; margin: 28px 0 34px; }
 .content-search { width: min(100%, 675px); height: 64px; display: flex; align-items: center; gap: 14px; padding: 0 20px; border: 1.5px solid #cbd6e5; border-radius: 14px; background: white; color: #9aa8bd; }
 .content-search input { font-size: 21px; }

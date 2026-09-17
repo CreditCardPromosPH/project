@@ -181,7 +181,7 @@ export default function Home() {
   const filteredPromos = useMemo(() => {
     const normalizedQuery = query.trim().toLowerCase();
     const result = promoData.filter((promo) => {
-      const matchesQuery = !normalizedQuery || [promo.promo, promo.bank, promo.summary, promo.category, promo.cardTypes].some((value) => value.toLowerCase().includes(normalizedQuery));
+      const matchesQuery = !normalizedQuery || [promo.promo, promo.bank, promo.summary, promo.category].some((value) => value.toLowerCase().includes(normalizedQuery));
       const matchesBank = selectedBanks.length === 0 || selectedBanks.includes(promo.bank);
       const matchesCategory = selectedCategories.length === 0 || selectedCategories.some((category) => promo.categories.includes(category));
       return matchesQuery && matchesBank && matchesCategory;
@@ -274,7 +274,7 @@ export default function Home() {
           </label>
         </div>
 
-        {filtersOpen && (
+        {filtersOpen ? (
           <section className="filter-panel" aria-label="Promotion filters">
             <div className="filter-group bank-filter-group">
               <div className="filter-dropdown">
@@ -326,6 +326,12 @@ export default function Home() {
 
             {activeFilterCount > 0 && <button className="clear-filters" onClick={clearFilters}><X size={15} /> Clear all filters</button>}
           </section>
+        ) : (
+          <button className="filter-panel-collapsed" onClick={() => setFiltersOpen(true)} aria-label="Show promotion filters">
+            <Filter size={19} />
+            <span>Show promotion filters</span>
+            <ChevronDown size={18} aria-hidden="true" />
+          </button>
         )}
 
         <div className="listing-toolbar">
@@ -350,7 +356,6 @@ export default function Home() {
                       <h2>{promo.promo || "Untitled promotion"}</h2>
                       <p>{promo.summary || "Open the offer page for the latest details."}</p>
                       <div className="promo-meta"><span><CalendarDays size={16} /> {promo.endDate ? `Valid until ${formatDate(promo.endDate)}` : "Check offer dates"}</span></div>
-                      {promo.cardTypes && <div className="promo-meta"><span><Tag size={16} /> {promo.cardTypes}</span></div>}
                     </div>
                   </button>
                   <a className="offer-link" href={promo.offerUrl || "#"} target="_blank" rel="noreferrer" onClick={(event) => event.stopPropagation()}>
@@ -379,7 +384,6 @@ export default function Home() {
               <p className="drawer-summary">{selectedPromo.summary || "Open the offer page for the full promotion details."}</p>
               <dl className="detail-list">
                 <div><dt><CalendarDays size={17} /> Dates</dt><dd>{selectedPromo.startDate ? `${formatDate(selectedPromo.startDate)} to ${formatDate(selectedPromo.endDate)}` : formatDate(selectedPromo.endDate)}</dd></div>
-                <div><dt><Tag size={17} /> Eligible cards</dt><dd>{selectedPromo.cardTypes || "See offer page"}</dd></div>
                 {selectedPromo.originalDateWording && <div><dt>Source wording</dt><dd>{selectedPromo.originalDateWording}</dd></div>}
               </dl>
               <a className="drawer-offer-link" href={selectedPromo.offerUrl || "#"} target="_blank" rel="noreferrer">Open original offer <ExternalLink size={17} /></a>

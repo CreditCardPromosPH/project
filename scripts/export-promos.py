@@ -19,6 +19,17 @@ IMAGE_URL_OVERRIDES = {
     "https://www.bpi.com.ph/content/dam/bau/promos/2026-promos/hue,-laud,-wright,-the-aurora/content_card_hue_boracay.jpg_boracay.png":
         "https://www.bpi.com.ph/content/dam/bau/promos/2026-promos/hue,-laud,-wright,-the-aurora/content_card_hue_boracay.jpg",
 }
+CATEGORY_ORDER = [
+    "Dining",
+    "Shopping",
+    "Travel & Leisure",
+    "Installments & Financing",
+    "Online",
+    "Services",
+    "Health & Wellness",
+    "Welcome Gift",
+    "Other",
+]
 
 
 def scalar(value):
@@ -36,6 +47,55 @@ def is_current_end_date(value):
         return date.fromisoformat(value[:10]) >= date.today()
     except ValueError:
         return True
+
+
+def normalize_categories(raw_categories, promo, summary):
+    raw_text = " ".join(raw_categories).lower()
+    categories = []
+
+    def add(category):
+        if category not in categories:
+            categories.append(category)
+
+    if any(term in raw_text for term in ("dine", "dining", "restaurant")):
+        add("Dining")
+    if any(term in raw_text for term in ("shopping", "shop", "essentials", "technology")):
+        add("Shopping")
+    if any(term in raw_text for term in ("travel", "leisure", "stay", "entertainment")):
+        add("Travel & Leisure")
+    if any(term in raw_text for term in ("installment", "buy now pay later")):
+        add("Installments & Financing")
+    if any(term in raw_text for term in ("online", "e-commerce", "ecommerce")):
+        add("Online")
+    if "service" in raw_text:
+        add("Services")
+    if any(term in raw_text for term in ("health", "wellness", "beauty")):
+        add("Health & Wellness")
+    if "welcome" in raw_text:
+        add("Welcome Gift")
+
+    if not categories:
+        text = promo.lower()
+        if any(term in text for term in ("dine", "dining", "restaurant", "food", "cafe", "coffee", "ramen")):
+            add("Dining")
+        if any(term in text for term in ("shopping", "shop", "store", "mall", "grocery", "fashion", "technology", "appliance", "electronics", "jewelry", "miniso", "lazada", "shopee", "zara", "sperry", "keds", "merrell")):
+            add("Shopping")
+        if any(term in text for term in ("travel", "hotel", "resort", "stay", "flight", "airline", "agoda", "booking", "trip", "tour", "vacation", "holiday", "airport", "entertainment")):
+            add("Travel & Leisure")
+        if any(term in text for term in ("installment", "buy now pay later", "pay later", "flexipay", "cash2go", "0%")):
+            add("Installments & Financing")
+        if any(term in text for term in ("online", "e-commerce", "ecommerce", "foodpanda", "qr ph", "digital", "bdo pay", "payeasy")):
+            add("Online")
+        if any(term in text for term in ("service", "insurance", "automotive", "car care", "fuel", "gas station", "utility")):
+            add("Services")
+        if any(term in text for term in ("health", "wellness", "beauty", "diagnostic", "clinic", "dental", "skin", "spa", "salon", "pharmacy", "optical", "fitness")):
+            add("Health & Wellness")
+        if any(term in text for term in ("welcome", "naffl", "new card", "member-get-member", "referral", "acquisition")):
+            add("Welcome Gift")
+    if not categories:
+        add("Other")
+
+    return sorted(categories, key=CATEGORY_ORDER.index)
 
 
 def cache_bank_image(bank, url):
@@ -101,7 +161,9 @@ def main():
         if end_date and not is_current_end_date(end_date):
             continue
         categories_raw = value(row, "Category")
-        categories = [part.strip() for part in re.split(r"\s*;\s*", categories_raw) if part.strip()]
+        raw_categories = [part.strip() for part in re.split(r"\s*;\s*", categories_raw) if part.strip()]
+        summary = value(row, "Offer summary")
+        categories = normalize_categories(raw_categories, promo, summary)
         identifier = hashlib.sha1(f"{bank}|{promo}|{offer_url}|{row}".encode()).hexdigest()[:16]
 
         image_url = value(row, "Image")
@@ -114,9 +176,9 @@ def main():
             "id": identifier,
             "bank": bank,
             "promo": promo,
-            "category": categories_raw,
+            "category": "; ".join(categories),
             "categories": categories,
-            "summary": value(row, "Offer summary"),
+            "summary": summary,
             "startDate": value(row, "Start date") or None,
             "endDate": end_date,
             "dateCheck": value(row, "Date check"),
