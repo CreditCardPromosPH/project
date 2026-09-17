@@ -159,7 +159,6 @@ export default function Home() {
   const [query, setQuery] = useState("");
   const [selectedBanks, setSelectedBanks] = useState<string[]>([]);
   const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
-  const [statusFilter, setStatusFilter] = useState("all");
   const [sort, setSort] = useState("ending");
   const [filtersOpen, setFiltersOpen] = useState(true);
   const [openFilterMenu, setOpenFilterMenu] = useState<"banks" | "categories" | null>(null);
@@ -185,8 +184,7 @@ export default function Home() {
       const matchesQuery = !normalizedQuery || [promo.promo, promo.bank, promo.summary, promo.category, promo.cardTypes].some((value) => value.toLowerCase().includes(normalizedQuery));
       const matchesBank = selectedBanks.length === 0 || selectedBanks.includes(promo.bank);
       const matchesCategory = selectedCategories.length === 0 || selectedCategories.some((category) => promo.categories.includes(category));
-      const matchesStatus = statusFilter === "all" || getStatus(promo) === statusFilter;
-      return matchesQuery && matchesBank && matchesCategory && matchesStatus;
+      return matchesQuery && matchesBank && matchesCategory;
     });
 
     return result.sort((a, b) => {
@@ -195,7 +193,7 @@ export default function Home() {
       if (sort === "title") return a.promo.localeCompare(b.promo);
       return (a.endDate ?? "9999-12-31").localeCompare(b.endDate ?? "9999-12-31");
     });
-  }, [query, selectedBanks, selectedCategories, statusFilter, sort]);
+  }, [query, selectedBanks, selectedCategories, sort]);
 
   const toggleValue = (value: string, selected: string[], setter: (next: string[]) => void) => {
     setter(selected.includes(value) ? selected.filter((item) => item !== value) : [...selected, value]);
@@ -205,11 +203,10 @@ export default function Home() {
   const clearFilters = () => {
     setSelectedBanks([]);
     setSelectedCategories([]);
-    setStatusFilter("all");
     setQuery("");
   };
 
-  const activeFilterCount = selectedBanks.length + selectedCategories.length + (statusFilter === "all" ? 0 : 1);
+  const activeFilterCount = selectedBanks.length + selectedCategories.length;
   const visiblePromos = filteredPromos.slice(0, displayLimit);
 
   return (
@@ -324,15 +321,6 @@ export default function Home() {
                     })}
                   </div>
                 )}
-              </div>
-            </div>
-
-            <div className="filter-group status-filter-group">
-              <div className="filter-group-heading"><h2>Status</h2><span>Offer timing</span></div>
-              <div className="status-options">
-                {[['all', 'All'], ['active', 'Active'], ['ending', 'Ending soon'], ['expired', 'Expired']].map(([value, label]) => (
-                  <button key={value} className={`status-option ${statusFilter === value ? "selected" : ""}`} onClick={() => setStatusFilter(value)} aria-pressed={statusFilter === value}>{label}</button>
-                ))}
               </div>
             </div>
 

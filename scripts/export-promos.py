@@ -29,6 +29,15 @@ def scalar(value):
     return "" if value is None else str(value).strip()
 
 
+def is_current_end_date(value):
+    if not value:
+        return True
+    try:
+        return date.fromisoformat(value[:10]) >= date.today()
+    except ValueError:
+        return True
+
+
 def cache_bank_image(bank, url):
     if not url.startswith(("http://", "https://")):
         return ""
@@ -88,6 +97,9 @@ def main():
         bank = value(row, "Bank")
         promo = value(row, "Promo")
         offer_url = value(row, "Offer page")
+        end_date = value(row, "End date") or None
+        if end_date and not is_current_end_date(end_date):
+            continue
         categories_raw = value(row, "Category")
         categories = [part.strip() for part in re.split(r"\s*;\s*", categories_raw) if part.strip()]
         identifier = hashlib.sha1(f"{bank}|{promo}|{offer_url}|{row}".encode()).hexdigest()[:16]
@@ -106,7 +118,7 @@ def main():
             "categories": categories,
             "summary": value(row, "Offer summary"),
             "startDate": value(row, "Start date") or None,
-            "endDate": value(row, "End date") or None,
+            "endDate": end_date,
             "dateCheck": value(row, "Date check"),
             "cardTypes": value(row, "Card types (listing)"),
             "offerUrl": offer_url if offer_url.startswith(("http://", "https://")) else "",
