@@ -3,6 +3,7 @@
 import { useMemo, useState } from "react";
 import {
   CalendarDays,
+  Check,
   ChevronDown,
   ExternalLink,
   Filter,
@@ -161,6 +162,7 @@ export default function Home() {
   const [statusFilter, setStatusFilter] = useState("all");
   const [sort, setSort] = useState("ending");
   const [filtersOpen, setFiltersOpen] = useState(true);
+  const [openFilterMenu, setOpenFilterMenu] = useState<"banks" | "categories" | null>(null);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [selectedPromo, setSelectedPromo] = useState<Promo | null>(null);
   const [displayLimit, setDisplayLimit] = useState(40);
@@ -278,28 +280,50 @@ export default function Home() {
         {filtersOpen && (
           <section className="filter-panel" aria-label="Promotion filters">
             <div className="filter-group bank-filter-group">
-              <div className="filter-group-heading"><h2>Banks</h2><span>{selectedBanks.length ? `${selectedBanks.length} selected` : "All banks"}</span></div>
-              <div className="filter-options">
-                {banks.map(([bank, count]) => (
-                  <button key={bank} className={`bank-option ${selectedBanks.includes(bank) ? "selected" : ""}`} onClick={() => toggleValue(bank, selectedBanks, setSelectedBanks)} aria-pressed={selectedBanks.includes(bank)}>
-                    <BankMark bank={bank} />
-                    <span>{bank}</span>
-                    <small>{count}</small>
-                  </button>
-                ))}
+              <div className="filter-dropdown">
+                <button className={`filter-dropdown-trigger ${openFilterMenu === "banks" ? "is-open" : ""}`} onClick={() => setOpenFilterMenu(openFilterMenu === "banks" ? null : "banks")} aria-expanded={openFilterMenu === "banks"} aria-haspopup="listbox">
+                  <span className="filter-dropdown-copy"><strong>Banks</strong><span>{selectedBanks.length ? `${selectedBanks.length} selected` : "All banks"}</span></span>
+                  <ChevronDown size={18} aria-hidden="true" />
+                </button>
+                {openFilterMenu === "banks" && (
+                  <div className="filter-dropdown-menu" role="listbox" aria-label="Select banks">
+                    {banks.map(([bank, count]) => {
+                      const selected = selectedBanks.includes(bank);
+                      return (
+                        <button type="button" key={bank} className={`filter-menu-option ${selected ? "selected" : ""}`} onClick={() => toggleValue(bank, selectedBanks, setSelectedBanks)} aria-pressed={selected}>
+                          <span className="filter-option-check">{selected && <Check size={14} strokeWidth={3} />}</span>
+                          <BankMark bank={bank} compact />
+                          <span>{bank}</span>
+                          <small>{count}</small>
+                        </button>
+                      );
+                    })}
+                  </div>
+                )}
               </div>
             </div>
 
             <div className="filter-group">
-              <div className="filter-group-heading"><h2>Categories</h2><span>{selectedCategories.length ? `${selectedCategories.length} selected` : "Most common"}</span></div>
-              <div className="filter-options category-options">
-                {categories.slice(0, 12).map(([category, count]) => (
-                  <button key={category} className={`category-option ${selectedCategories.includes(category) ? "selected" : ""}`} onClick={() => toggleValue(category, selectedCategories, setSelectedCategories)} aria-pressed={selectedCategories.includes(category)}>
-                    <Tag size={16} />
-                    <span>{category}</span>
-                    <small>{count}</small>
-                  </button>
-                ))}
+              <div className="filter-dropdown">
+                <button className={`filter-dropdown-trigger ${openFilterMenu === "categories" ? "is-open" : ""}`} onClick={() => setOpenFilterMenu(openFilterMenu === "categories" ? null : "categories")} aria-expanded={openFilterMenu === "categories"} aria-haspopup="listbox">
+                  <span className="filter-dropdown-copy"><strong>Categories</strong><span>{selectedCategories.length ? `${selectedCategories.length} selected` : "All categories"}</span></span>
+                  <ChevronDown size={18} aria-hidden="true" />
+                </button>
+                {openFilterMenu === "categories" && (
+                  <div className="filter-dropdown-menu" role="listbox" aria-label="Select categories">
+                    {categories.map(([category, count]) => {
+                      const selected = selectedCategories.includes(category);
+                      return (
+                        <button type="button" key={category} className={`filter-menu-option ${selected ? "selected" : ""}`} onClick={() => toggleValue(category, selectedCategories, setSelectedCategories)} aria-pressed={selected}>
+                          <span className="filter-option-check">{selected && <Check size={14} strokeWidth={3} />}</span>
+                          <Tag size={16} />
+                          <span>{category}</span>
+                          <small>{count}</small>
+                        </button>
+                      );
+                    })}
+                  </div>
+                )}
               </div>
             </div>
 
