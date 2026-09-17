@@ -210,7 +210,14 @@ export default function Home() {
   const visiblePromos = filteredPromos.slice(0, displayLimit);
 
   return (
-    <main className="site-shell">
+    <main
+      className="site-shell"
+      onClick={(event) => {
+        if (!(event.target instanceof HTMLElement) || !event.target.closest(".filter-dropdown")) {
+          setOpenFilterMenu(null);
+        }
+      }}
+    >
       <header className="site-header">
         <div className="site-header-inner">
           <a className="brand" href="#top" aria-label="Credit Card Promos home">
