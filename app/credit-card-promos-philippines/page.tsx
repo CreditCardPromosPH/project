@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import {
   ArrowRight,
   CalendarDays,
@@ -235,12 +236,12 @@ export default function CreditCardPromosPhilippinesPage() {
 
       <header className="site-header">
         <div className="site-header-inner">
-          <a className="brand" href="/" aria-label="Credit Card Promos home">
+          <Link className="brand" href="/" aria-label="Credit Card Promos home">
             <img className="brand-logo" src="/logo.svg" alt="" width="720" height="180" />
-          </a>
+          </Link>
           <nav className="guide-page-nav" aria-label="Primary navigation">
-            <a href="/">Directory</a>
-            <a href="/credit-card-promos-philippines">Guide</a>
+            <Link href="/">Directory</Link>
+            <Link href="/credit-card-promos-philippines">Guides</Link>
             <a href="/privacy-policy">Privacy</a>
           </nav>
         </div>
@@ -257,9 +258,9 @@ export default function CreditCardPromosPhilippinesPage() {
               starting point for deeper promo research.
             </p>
             <div className="guide-actions">
-              <a className="primary-guide-link" href="/#top">
+              <Link className="primary-guide-link" href="/#top">
                 Browse all promos <ArrowRight size={17} />
-              </a>
+              </Link>
               <a className="secondary-guide-link" href="#best-by-category">
                 Compare by promo type
               </a>
@@ -301,7 +302,7 @@ export default function CreditCardPromosPhilippinesPage() {
             <div>
               <ShieldCheck size={22} />
               <h3>Verify the terms</h3>
-              <p>Always confirm eligible cards, minimum spend, merchant branches, exclusions, and reward mechanics on the bank's official page before applying or purchasing.</p>
+              <p>Always confirm eligible cards, minimum spend, merchant branches, exclusions, and reward mechanics on the bank&apos;s official page before applying or purchasing.</p>
             </div>
           </div>
         </section>
@@ -312,7 +313,7 @@ export default function CreditCardPromosPhilippinesPage() {
               <p className="eyebrow">Promo types</p>
               <h2 id="category-heading">Best credit card promo categories to compare</h2>
             </div>
-            <a href="/#top">Open full directory <ExternalLink size={15} /></a>
+            <Link href="/#top">Open full directory <ExternalLink size={15} /></Link>
           </div>
 
           <div className="category-guide-grid">
@@ -407,7 +408,7 @@ export default function CreditCardPromosPhilippinesPage() {
             </p>
             <p>
               Promo summaries are meant for comparison. Final eligibility, card coverage, rewards, exclusions,
-              registration requirements, and redemption mechanics should always be confirmed on the bank's official
+              registration requirements, and redemption mechanics should always be confirmed on the bank&apos;s official
               offer page before you apply, register, or transact.
             </p>
           </div>
@@ -444,9 +445,9 @@ export default function CreditCardPromosPhilippinesPage() {
             <h2 id="cta-heading">Ready to compare active promos?</h2>
             <p>Use the directory to filter current credit card promos by bank, category, and expiration date.</p>
           </div>
-          <a className="primary-guide-link" href="/#top">
+          <Link className="primary-guide-link" href="/#top">
             Search promos <Search size={17} />
-          </a>
+          </Link>
         </section>
       </article>
     </main>

@@ -187,6 +187,8 @@ export default function Home() {
     const nextQuery = params.get("q");
     const nextSort = params.get("sort");
 
+    // Hydrate directory filters from shareable URL parameters once on mount.
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     if (nextBanks.length) setSelectedBanks([...new Set(nextBanks)]);
     if (nextCategories.length) setSelectedCategories([...new Set(nextCategories)]);
     if (nextQuery) setQuery(nextQuery);
@@ -242,7 +244,7 @@ export default function Home() {
 
           <nav className="desktop-nav" aria-label="Primary navigation">
             <a href="#top">Home</a>
-            <a href="/credit-card-promos-philippines">Guide</a>
+            <a href="/credit-card-promos-philippines">Guides</a>
             <a href="/privacy-policy">Privacy</a>
             <a href="/terms-of-use">Terms</a>
           </nav>
@@ -253,7 +255,7 @@ export default function Home() {
         {mobileMenuOpen && (
           <nav className="mobile-nav" aria-label="Mobile navigation">
             <a href="#top" onClick={() => setMobileMenuOpen(false)}>Home</a>
-            <a href="/credit-card-promos-philippines" onClick={() => setMobileMenuOpen(false)}>Guide</a>
+            <a href="/credit-card-promos-philippines" onClick={() => setMobileMenuOpen(false)}>Guides</a>
             <a href="/privacy-policy" onClick={() => setMobileMenuOpen(false)}>Privacy</a>
             <a href="/terms-of-use" onClick={() => setMobileMenuOpen(false)}>Terms</a>
           </nav>
