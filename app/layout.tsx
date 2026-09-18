@@ -5,6 +5,7 @@ import "./globals.css";
 const GA_MEASUREMENT_ID = "G-GT1D9QCXGY";
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://creditcardpromos-ph.romanogiuseppe341.chatgpt.site"),
   title: "CreditCardPromos.ph | Philippine Credit Card Promos",
   description: "Browse current credit card promotions from banks in the Philippines.",
   icons: {
