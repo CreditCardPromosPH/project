@@ -240,9 +240,10 @@ export default function CreditCardPromosPhilippinesPage() {
             <img className="brand-logo" src="/logo.svg" alt="" width="720" height="180" />
           </Link>
           <nav className="guide-page-nav" aria-label="Primary navigation">
-            <Link href="/">Directory</Link>
-            <Link href="/credit-card-promos-philippines">Guides</Link>
+            <Link href="/">Home</Link>
+            <Link href="/guides">Guides</Link>
             <a href="/privacy-policy">Privacy</a>
+            <a href="/terms-of-use">Terms</a>
           </nav>
         </div>
       </header>
