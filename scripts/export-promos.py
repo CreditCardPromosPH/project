@@ -200,7 +200,27 @@ def main():
         "categories": sorted({category for promo in promos for category in promo["categories"]}),
     }
 
+    client_promos = [
+        {
+            "id": promo["id"],
+            "bank": promo["bank"],
+            "promo": promo["promo"],
+            "category": promo["category"],
+            "categories": promo["categories"],
+            "summary": promo["summary"],
+            "startDate": promo["startDate"],
+            "endDate": promo["endDate"],
+            "dateCheck": promo["dateCheck"],
+            "offerUrl": promo["offerUrl"],
+            "imageUrl": promo["imageUrl"],
+            "originalDateWording": promo["originalDateWording"],
+            "dateAdded": promo["dateAdded"],
+        }
+        for promo in promos
+    ]
+
     (OUTPUT / "promos.json").write_text(json.dumps(promos, ensure_ascii=True, separators=(",", ":")), encoding="utf-8")
+    (OUTPUT / "promos-client.json").write_text(json.dumps(client_promos, ensure_ascii=True, separators=(",", ":")), encoding="utf-8")
     (OUTPUT / "meta.json").write_text(json.dumps(metadata, ensure_ascii=True, indent=2), encoding="utf-8")
     print(f"Exported {len(promos)} promotions from {SOURCE.name}")
 
