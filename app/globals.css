@@ -213,6 +213,19 @@ h1 span { color: var(--blue); }
 .guide-cta p { margin: 6px 0 0; color: #dbe5fa; }
 .guide-cta .primary-guide-link { background: white; color: var(--blue-dark); box-shadow: none; }
 .guide-cta .primary-guide-link:hover { color: white; background: #102d70; }
+.guides-index { width: min(100% - 64px, 1040px); margin: 0 auto; padding: 54px 0 90px; }
+.guides-index-hero { padding-bottom: 34px; border-bottom: 1px solid var(--line); }
+.guides-index-hero h1 { color: #17243b; font-size: clamp(42px, 5vw, 64px); line-height: 1; }
+.guides-index-hero p:not(.eyebrow) { max-width: 720px; margin: 18px 0 0; color: #53627a; font-size: 19px; line-height: 1.55; }
+.articles-list { display: grid; gap: 16px; padding-top: 34px; }
+.article-link-card { min-width: 0; display: grid; grid-template-columns: auto minmax(0, 1fr) auto; gap: 18px; align-items: center; padding: 24px; border: 1px solid var(--line); border-radius: 8px; background: white; box-shadow: 0 8px 20px rgb(35 57 89 / 5%); transition: border-color .16s ease, transform .16s ease, box-shadow .16s ease; }
+.article-link-card:hover { border-color: #9cb3dc; transform: translateY(-2px); box-shadow: 0 14px 28px rgb(35 57 89 / 10%); }
+.article-icon { width: 48px; height: 48px; display: grid; place-items: center; border-radius: 8px; color: var(--blue); background: #edf3ff; }
+.article-card-copy { display: grid; gap: 8px; min-width: 0; color: #53627a; line-height: 1.5; }
+.article-card-copy strong { color: #17243b; font-size: 24px; line-height: 1.2; }
+.article-kicker { color: var(--blue); font-size: 13px; font-weight: 900; letter-spacing: .04em; text-transform: uppercase; }
+.article-updated { display: inline-flex; align-items: center; gap: 7px; color: #738198; font-size: 14px; font-weight: 700; }
+.article-arrow { color: var(--blue); }
 
 @media (max-width: 1320px) {
   .site-header-inner, .page-content { width: min(100% - 40px, 1180px); }
@@ -273,6 +286,7 @@ h1 span { color: var(--blue); }
   .bank-guide-list { grid-template-columns: 1fr; }
   .guide-cta { grid-template-columns: 1fr; }
   .guide-cta .primary-guide-link { justify-self: start; }
+  .guides-index { width: min(100% - 32px, 760px); padding-top: 42px; }
 }
 
 @media (max-width: 560px) {
@@ -285,4 +299,7 @@ h1 span { color: var(--blue); }
   .section-heading-row { align-items: flex-start; flex-direction: column; gap: 14px; }
   .bank-guide-row { grid-template-columns: auto minmax(0, 1fr) auto; }
   .bank-guide-row strong { grid-column: 2 / 4; text-align: left; }
+  .article-link-card { grid-template-columns: 1fr; padding: 20px; }
+  .article-card-copy strong { font-size: 21px; }
+  .article-arrow { display: none; }
 }
