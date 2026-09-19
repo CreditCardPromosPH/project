@@ -1,6 +1,7 @@
 from datetime import date, datetime
 import hashlib
 import json
+import os
 import re
 from pathlib import Path
 import sys
@@ -12,8 +13,8 @@ from openpyxl import load_workbook
 
 
 ROOT = Path(__file__).resolve().parents[1]
-SOURCE = ROOT.parent / "Credit Card Promos.xlsx"
-OUTPUT = ROOT / "app" / "data"
+SOURCE = Path(os.environ.get("PROMOS_SOURCE_XLSX", ROOT.parent / "Credit Card Promos.xlsx"))
+OUTPUT = Path(os.environ.get("PROMOS_DATA_OUTPUT", ROOT / "app" / "data"))
 IMAGE_CACHE_BANKS = {"BPI", "RCBC"}
 IMAGE_URL_OVERRIDES = {
     "https://www.bpi.com.ph/content/dam/bau/promos/2026-promos/hue,-laud,-wright,-the-aurora/content_card_hue_boracay.jpg_boracay.png":
@@ -136,6 +137,12 @@ def cache_bank_image(bank, url):
     return f"/promo-images/{bank.lower()}/{filename}"
 
 
+def write_json(path, payload, **kwargs):
+    temporary = path.with_suffix(path.suffix + ".tmp")
+    temporary.write_text(json.dumps(payload, **kwargs), encoding="utf-8")
+    temporary.replace(path)
+
+
 def main():
     OUTPUT.mkdir(parents=True, exist_ok=True)
     workbook = load_workbook(SOURCE, data_only=True)
@@ -200,8 +207,28 @@ def main():
         "categories": sorted({category for promo in promos for category in promo["categories"]}),
     }
 
-    (OUTPUT / "promos.json").write_text(json.dumps(promos, ensure_ascii=True, separators=(",", ":")), encoding="utf-8")
-    (OUTPUT / "meta.json").write_text(json.dumps(metadata, ensure_ascii=True, indent=2), encoding="utf-8")
+    client_promos = [
+        {
+            "id": promo["id"],
+            "bank": promo["bank"],
+            "promo": promo["promo"],
+            "category": promo["category"],
+            "categories": promo["categories"],
+            "summary": promo["summary"],
+            "startDate": promo["startDate"],
+            "endDate": promo["endDate"],
+            "dateCheck": promo["dateCheck"],
+            "offerUrl": promo["offerUrl"],
+            "imageUrl": promo["imageUrl"],
+            "originalDateWording": promo["originalDateWording"],
+            "dateAdded": promo["dateAdded"],
+        }
+        for promo in promos
+    ]
+
+    write_json(OUTPUT / "promos.json", promos, ensure_ascii=True, separators=(",", ":"))
+    write_json(OUTPUT / "promos-client.json", client_promos, ensure_ascii=True, separators=(",", ":"))
+    write_json(OUTPUT / "meta.json", metadata, ensure_ascii=True, indent=2)
     print(f"Exported {len(promos)} promotions from {SOURCE.name}")
 
 

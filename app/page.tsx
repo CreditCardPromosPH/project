@@ -11,7 +11,7 @@ import {
   Tag,
   X,
 } from "lucide-react";
-import promoDataJson from "./data/promos.json";
+import promoDataJson from "./data/promos-client.json";
 
 type Promo = {
   id: string;
@@ -23,16 +23,14 @@ type Promo = {
   startDate: string | null;
   endDate: string | null;
   dateCheck: string;
-  cardTypes: string;
   offerUrl: string;
   imageUrl: string;
   originalDateWording: string;
-  checkedDate: string;
   dateAdded: string | null;
-  sourceRow: number;
 };
 
 const promoData = promoDataJson as Promo[];
+const INITIAL_DISPLAY_LIMIT = 24;
 
 const bankMarks: Record<string, string> = {
   BDO: "BDO",
@@ -162,7 +160,7 @@ export default function Home() {
   const [openFilterMenu, setOpenFilterMenu] = useState<"banks" | "categories" | null>(null);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [selectedPromo, setSelectedPromo] = useState<Promo | null>(null);
-  const [displayLimit, setDisplayLimit] = useState(40);
+  const [displayLimit, setDisplayLimit] = useState(INITIAL_DISPLAY_LIMIT);
 
   const banks = useMemo(() => {
     const counts = new Map<string, number>();
@@ -215,7 +213,7 @@ export default function Home() {
 
   const toggleValue = (value: string, selected: string[], setter: (next: string[]) => void) => {
     setter(selected.includes(value) ? selected.filter((item) => item !== value) : [...selected, value]);
-    setDisplayLimit(40);
+    setDisplayLimit(INITIAL_DISPLAY_LIMIT);
   };
 
   const clearFilters = () => {
@@ -244,7 +242,7 @@ export default function Home() {
 
           <nav className="desktop-nav" aria-label="Primary navigation">
             <a href="#top">Home</a>
-            <a href="/guides">Guides</a>
+            <a href="/credit-card-promos-philippines">Guides</a>
             <a href="/privacy-policy">Privacy</a>
             <a href="/terms-of-use">Terms</a>
           </nav>
@@ -255,7 +253,7 @@ export default function Home() {
         {mobileMenuOpen && (
           <nav className="mobile-nav" aria-label="Mobile navigation">
             <a href="#top" onClick={() => setMobileMenuOpen(false)}>Home</a>
-            <a href="/guides" onClick={() => setMobileMenuOpen(false)}>Guides</a>
+            <a href="/credit-card-promos-philippines" onClick={() => setMobileMenuOpen(false)}>Guides</a>
             <a href="/privacy-policy" onClick={() => setMobileMenuOpen(false)}>Privacy</a>
             <a href="/terms-of-use" onClick={() => setMobileMenuOpen(false)}>Terms</a>
           </nav>

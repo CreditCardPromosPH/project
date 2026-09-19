@@ -214,6 +214,18 @@ h1 span { color: var(--blue); }
 .guide-cta .primary-guide-link { background: white; color: var(--blue-dark); box-shadow: none; }
 .guide-cta .primary-guide-link:hover { color: white; background: #102d70; }
 
+.guides-index-hero { padding-bottom: 34px; border-bottom: 1px solid var(--line); }
+.guides-index-hero p:not(.eyebrow) { max-width: 720px; margin: 18px 0 0; color: #53627a; font-size: 19px; line-height: 1.55; }
+.articles-list { display: grid; gap: 16px; padding-top: 34px; }
+.article-link-card { min-width: 0; display: grid; grid-template-columns: auto minmax(0, 1fr) auto; gap: 18px; align-items: center; padding: 24px; border: 1px solid var(--line); border-radius: 8px; background: white; box-shadow: 0 8px 20px rgb(35 57 89 / 5%); transition: border-color .16s ease, transform .16s ease, box-shadow .16s ease; }
+.article-link-card:hover { border-color: #9cb3dc; transform: translateY(-2px); box-shadow: 0 14px 28px rgb(35 57 89 / 10%); }
+.article-icon { width: 48px; height: 48px; display: grid; place-items: center; border-radius: 8px; color: var(--blue); background: #edf3ff; }
+.article-card-copy { display: grid; gap: 8px; min-width: 0; color: #53627a; line-height: 1.5; }
+.article-card-copy strong { color: #17243b; font-size: 24px; line-height: 1.2; }
+.article-kicker { color: var(--blue); font-size: 13px; font-weight: 900; letter-spacing: .04em; text-transform: uppercase; }
+.article-updated { display: inline-flex; align-items: center; gap: 7px; color: #738198; font-size: 14px; font-weight: 700; }
+.article-arrow { color: var(--blue); }
+
 .guides-shell { min-height: 100vh; background: var(--page); }
 .guides-index { width: min(100% - 64px, 1180px); margin: 0 auto; padding: 58px 0 90px; }
 .guides-index h1 { color: #17243b; font-size: clamp(42px, 5vw, 70px); line-height: .98; }
@@ -282,6 +294,9 @@ h1 span { color: var(--blue); }
   .article-card { grid-template-columns: 1fr; padding: 20px; }
   .article-card h2 { font-size: 24px; }
   .article-card-arrow { justify-self: start; }
+  .article-link-card { grid-template-columns: 1fr; padding: 20px; }
+  .article-card-copy strong { font-size: 21px; }
+  .article-arrow { display: none; }
 }
 
 @media (max-width: 960px) {

@@ -1,67 +1,91 @@
 import type { Metadata } from "next";
-import Link from "next/link";
-import { ArrowRight, BookOpen } from "lucide-react";
+import { ArrowRight, BookOpen, CalendarDays } from "lucide-react";
+import metaJson from "../data/meta.json";
 
-export const metadata: Metadata = {
-  title: "Guides & Articles | CreditCardPromos.ph",
-  description:
-    "Practical guides for comparing Philippine credit card promotions by bank, category, and offer type.",
+type PromoMeta = {
+  checkedAt: string;
+  listedOffers: number;
+  banks: string[];
+  categories: string[];
 };
+
+const promoMeta = metaJson as PromoMeta;
+
+function formatLongDate(value: string) {
+  return new Date(`${value}T00:00:00`).toLocaleDateString("en-PH", {
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+  });
+}
 
 const articles = [
   {
-    title: "Credit Card Promos Philippines: Current Offers Worth Checking First",
+    title: "Credit Card Promos Philippines: Best Current Offers",
     description:
-      "Compare active Philippine credit card promotions by bank, promo type, reward value, and expiry date.",
+      "A practical guide to comparing Philippine credit card promos by bank, promo type, reward value, and expiry date.",
     href: "/credit-card-promos-philippines",
-    label: "Credit card guide",
+    updated: formatLongDate(promoMeta.checkedAt),
+    kicker: "Credit card promo guide",
   },
 ];
 
+export const metadata: Metadata = {
+  title: "Guides | CreditCardPromos.ph",
+  description:
+    "Read CreditCardPromos.ph guides for comparing Philippine credit card promos, dining offers, travel deals, cashback, installments, and welcome gifts.",
+  alternates: {
+    canonical: "/guides",
+  },
+};
+
 export default function GuidesPage() {
   return (
-    <main className="guides-shell">
+    <main className="guide-shell">
       <header className="site-header">
         <div className="site-header-inner">
-          <Link className="brand" href="/" aria-label="Credit Card Promos home">
+          <a className="brand" href="/" aria-label="Credit Card Promos home">
             <img className="brand-logo" src="/logo.svg" alt="" width="720" height="180" />
-          </Link>
-          <nav className="guides-page-nav" aria-label="Primary navigation">
-            <Link href="/">Home</Link>
-            <Link href="/guides">Guides</Link>
-            <Link href="/privacy-policy">Privacy</Link>
-            <Link href="/terms-of-use">Terms</Link>
+          </a>
+          <nav className="guide-page-nav" aria-label="Primary navigation">
+            <a href="/">Directory</a>
+            <a href="/guides">Guides</a>
+            <a href="/privacy-policy">Privacy</a>
+            <a href="/terms-of-use">Terms</a>
           </nav>
         </div>
       </header>
 
-      <section className="guides-index" aria-labelledby="guides-heading">
-        <p className="eyebrow">CreditCardPromos.ph library</p>
-        <h1 id="guides-heading">Guides &amp; Articles</h1>
-        <p className="guides-index-lede">
-          Helpful ways to compare credit card promotions, understand offer types, and find deals worth checking.
-        </p>
+      <article className="guides-index">
+        <section className="guides-index-hero">
+          <p className="eyebrow">Guides</p>
+          <h1>Credit Card Promo Guides</h1>
+          <p>
+            Read practical guides for comparing Philippine credit card promos, finding current offers, and checking
+            the details that matter before you spend.
+          </p>
+        </section>
 
-        <div className="article-list">
+        <section className="articles-list" aria-label="All guide articles">
           {articles.map((article) => (
-            <Link className="article-card" href={article.href} key={article.href}>
-              <div>
-                <span className="article-card-label">{article.label}</span>
-                <h2>{article.title}</h2>
-                <p>{article.description}</p>
-              </div>
-              <span className="article-card-arrow" aria-hidden="true">
-                <ArrowRight size={24} />
+            <a className="article-link-card" href={article.href} key={article.href}>
+              <span className="article-icon" aria-hidden="true">
+                <BookOpen size={24} />
               </span>
-            </Link>
+              <span className="article-card-copy">
+                <span className="article-kicker">{article.kicker}</span>
+                <strong>{article.title}</strong>
+                <span>{article.description}</span>
+                <span className="article-updated">
+                  <CalendarDays size={16} />
+                  Updated {article.updated}
+                </span>
+              </span>
+              <ArrowRight className="article-arrow" size={22} aria-hidden="true" />
+            </a>
           ))}
-        </div>
-
-        <div className="guides-index-note">
-          <BookOpen size={20} aria-hidden="true" />
-          <p>New guides and explainers will be added here as the library grows.</p>
-        </div>
-      </section>
+        </section>
+      </article>
     </main>
   );
 }
