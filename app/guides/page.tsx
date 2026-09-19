@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import { ArrowRight, BookOpen, CalendarDays } from "lucide-react";
 import metaJson from "../data/meta.json";
 
@@ -44,14 +45,14 @@ export default function GuidesPage() {
     <main className="guide-shell">
       <header className="site-header">
         <div className="site-header-inner">
-          <a className="brand" href="/" aria-label="Credit Card Promos home">
+          <Link className="brand" href="/" aria-label="Credit Card Promos home">
             <img className="brand-logo" src="/logo.svg" alt="" width="720" height="180" />
-          </a>
+          </Link>
           <nav className="guide-page-nav" aria-label="Primary navigation">
-            <a href="/">Directory</a>
-            <a href="/guides">Guides</a>
-            <a href="/privacy-policy">Privacy</a>
-            <a href="/terms-of-use">Terms</a>
+            <Link href="/">Home</Link>
+            <Link href="/guides">Guides</Link>
+            <Link href="/privacy-policy">Privacy</Link>
+            <Link href="/terms-of-use">Terms</Link>
           </nav>
         </div>
       </header>
@@ -68,7 +69,7 @@ export default function GuidesPage() {
 
         <section className="articles-list" aria-label="All guide articles">
           {articles.map((article) => (
-            <a className="article-link-card" href={article.href} key={article.href}>
+            <Link className="article-link-card" href={article.href} key={article.href}>
               <span className="article-icon" aria-hidden="true">
                 <BookOpen size={24} />
               </span>
@@ -82,7 +83,7 @@ export default function GuidesPage() {
                 </span>
               </span>
               <ArrowRight className="article-arrow" size={22} aria-hidden="true" />
-            </a>
+            </Link>
           ))}
         </section>
       </article>

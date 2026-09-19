@@ -12,6 +12,7 @@ import {
   X,
 } from "lucide-react";
 import promoDataJson from "./data/promos-client.json";
+import promoMetaJson from "./data/meta.json";
 
 type Promo = {
   id: string;
@@ -30,6 +31,7 @@ type Promo = {
 };
 
 const promoData = promoDataJson as Promo[];
+const promoMeta = promoMetaJson as { checkedAt: string };
 const INITIAL_DISPLAY_LIMIT = 24;
 
 const bankMarks: Record<string, string> = {
@@ -156,7 +158,7 @@ export default function Home() {
   const [query, setQuery] = useState("");
   const [selectedBanks, setSelectedBanks] = useState<string[]>([]);
   const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
-  const [sort, setSort] = useState("ending");
+  const [sort, setSort] = useState("newest");
   const [openFilterMenu, setOpenFilterMenu] = useState<"banks" | "categories" | null>(null);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [selectedPromo, setSelectedPromo] = useState<Promo | null>(null);
@@ -242,7 +244,7 @@ export default function Home() {
 
           <nav className="desktop-nav" aria-label="Primary navigation">
             <a href="#top">Home</a>
-            <a href="/credit-card-promos-philippines">Guides</a>
+            <a href="/guides">Guides</a>
             <a href="/privacy-policy">Privacy</a>
             <a href="/terms-of-use">Terms</a>
           </nav>
@@ -253,7 +255,7 @@ export default function Home() {
         {mobileMenuOpen && (
           <nav className="mobile-nav" aria-label="Mobile navigation">
             <a href="#top" onClick={() => setMobileMenuOpen(false)}>Home</a>
-            <a href="/credit-card-promos-philippines" onClick={() => setMobileMenuOpen(false)}>Guides</a>
+            <a href="/guides" onClick={() => setMobileMenuOpen(false)}>Guides</a>
             <a href="/privacy-policy" onClick={() => setMobileMenuOpen(false)}>Privacy</a>
             <a href="/terms-of-use" onClick={() => setMobileMenuOpen(false)}>Terms</a>
           </nav>
@@ -341,7 +343,7 @@ export default function Home() {
 
         <div className="listing-toolbar">
           <p>Showing <strong>{visiblePromos.length.toLocaleString()}</strong> of <strong>{filteredPromos.length.toLocaleString()}</strong> promotions</p>
-          <p className="last-checked">Last checked Sep 17, 2026</p>
+          <p className="last-checked">Last checked {formatDate(promoMeta.checkedAt)}</p>
         </div>
 
         {visiblePromos.length > 0 ? (
