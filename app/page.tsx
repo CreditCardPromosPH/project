@@ -12,6 +12,7 @@ import {
   X,
 } from "lucide-react";
 import promoDataJson from "./data/promos-client.json";
+import promoMetaJson from "./data/meta.json";
 
 type Promo = {
   id: string;
@@ -30,6 +31,7 @@ type Promo = {
 };
 
 const promoData = promoDataJson as Promo[];
+const promoMeta = promoMetaJson as { checkedAt: string };
 const INITIAL_DISPLAY_LIMIT = 24;
 
 const bankMarks: Record<string, string> = {
@@ -321,7 +323,7 @@ export default function Home() {
 
         <div className="listing-toolbar">
           <p>Showing <strong>{visiblePromos.length.toLocaleString()}</strong> of <strong>{filteredPromos.length.toLocaleString()}</strong> promotions</p>
-          <p className="last-checked">Last checked Sep 17, 2026</p>
+          <p className="last-checked">Last checked {formatDate(promoMeta.checkedAt)}</p>
         </div>
 
         {visiblePromos.length > 0 ? (
