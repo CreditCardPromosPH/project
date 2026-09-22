@@ -15,9 +15,8 @@
 .introLinks a, .viewAll, .officialLink, .copy a, .note a { color: var(--blue-dark); font-weight: 700; }
 .introLinks a:hover, .viewAll:hover, .officialLink:hover, .copy a:hover, .note a:hover { text-decoration: underline; }
 .snapshot { padding: 20px 0; }
-.snapshot dl { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); margin: 0; gap: 20px; }
-.snapshot dl > div { display: flex; flex-direction: column-reverse; gap: 4px; border-left: 1px solid var(--line); padding-left: 24px; }
-.snapshot dl > div:first-child { padding-left: 0; border: 0; }
+.snapshot dl { display: flex; margin: 0; }
+.snapshot dl > div { display: flex; flex-direction: column-reverse; gap: 4px; }
 .snapshot dt { font-size: 14px; color: var(--muted); }
 .snapshot dd { margin: 0; font-size: 28px; line-height: 1.1; font-weight: 700; font-variant-numeric: tabular-nums; }
 .snapshot p { margin: 16px 0 0; font-size: 14px; color: var(--muted); }
@@ -72,8 +71,6 @@
   .intro { margin-top: 20px; }
   .intro h1 { font-size: 30px; }
   .lede { font-size: 16px; }
-  .snapshot dl { gap: 10px; }
-  .snapshot dl > div { padding-left: 10px; }
   .snapshot dd { font-size: 25px; }
   .categories { gap: 2px 18px; }
   .promoGrid, .checklist { grid-template-columns: 1fr; }

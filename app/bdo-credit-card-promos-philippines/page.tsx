@@ -39,7 +39,6 @@ const questions = [
 export default function BdoPromosPage() {
   const today = manilaDate();
   const promos = bankPromosForPage(promosJson, "BDO", today);
-  const dated = promos.filter((promo) => promoStatus(promo, today) === "current").length;
   const sections = selectCategoryPromos(promos, categories);
   const structuredData = [
     { "@context": "https://schema.org", "@type": "CollectionPage", name: title, description, url: `${siteUrl}${pagePath}`, dateModified: meta.checkedAt,
@@ -83,8 +82,6 @@ export default function BdoPromosPage() {
         <section className={styles.snapshot} aria-label="BDO promo snapshot">
           <dl>
             <div><dt>BDO offers listed</dt><dd>{promos.length.toLocaleString()}</dd></div>
-            <div><dt>With end dates not passed</dt><dd>{dated.toLocaleString()}</dd></div>
-            <div><dt>Need date confirmation</dt><dd>{(promos.length - dated).toLocaleString()}</dd></div>
           </dl>
           <p>Some offers include debit cards. Check the specific eligible card and terms on BDO&apos;s offer page.</p>
         </section>
