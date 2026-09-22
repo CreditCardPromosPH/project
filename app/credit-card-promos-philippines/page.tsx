@@ -40,7 +40,7 @@ type PromoMeta = {
 
 const promoData = promoDataJson as Promo[];
 const promoMeta = metaJson as PromoMeta;
-const siteUrl = "https://creditcardpromos-ph.romanogiuseppe341.chatgpt.site";
+const siteUrl = "https://www.creditcardpromos.ph";
 const pagePath = "/credit-card-promos-philippines";
 
 export const metadata: Metadata = {
