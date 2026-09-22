@@ -26,7 +26,7 @@ function questionsFor(bank: string) {
     { question: `What ${bank} credit card promos are currently available?`, answer: `This page tracks current ${bank} dining, travel, shopping, online, installment, and welcome gift promotions. Listings, counts, and dates update with our daily data refresh. The full directory includes other ${bank} offers that are not shown in the category selections.` },
     { question: `Do all ${bank} credit cards qualify for every promo?`, answer: `No. ${bank} offers can be limited to a specific card name, network, tier, or newly issued card. Check the exact eligible card and the official terms; holding a ${bank} card alone does not establish eligibility.` },
     { question: `Do I need to register for a ${bank} promo?`, answer: `Registration and redemption requirements depend on the offer. Before paying, check the official ${bank} terms for any registration step, promo code, designated booking link, or qualifying purchase channel.` },
-    { question: `Are ${bank} debit cards included?`, answer: `This page selects listings tagged for credit cards. Some offers also include debit cards, as indicated on the listing. The official terms identify the specific eligible cards.` },
+    { question: `Are ${bank} debit cards included?`, answer: `This page excludes records identified as debit-only. Some offers also include debit cards, as indicated on the listing, while other records need the official terms to confirm the exact card eligibility.` },
     { question: `How can I confirm a ${bank} offer's dates and terms?`, answer: `Use the official ${bank} link on each card. The displayed end date comes from our source data and may differ from a travel, redemption, or reward-crediting deadline. Check the full promotion mechanics before transacting.` },
   ];
 }
@@ -131,7 +131,7 @@ export default function BankPromoGuide({ guide }: { guide: BankGuide }) {
                       <h3>{promo.promo}</h3>
                       {promo.summary && <p>{promo.summary}</p>}
                       <dl className={styles.cardDetails}>
-                        <div><dt><CreditCard size={16} aria-hidden="true" /><span className={styles.srOnly}>Card type</span></dt><dd>{promo.cardTypes.replaceAll(";", " / ")}</dd></div>
+                        <div><dt><CreditCard size={16} aria-hidden="true" /><span className={styles.srOnly}>Card type</span></dt><dd>{promo.cardTypes ? promo.cardTypes.replaceAll(";", " / ") : "Check official terms"}</dd></div>
                         <div><dt><CalendarDays size={16} aria-hidden="true" /><span className={styles.srOnly}>Listed end date</span></dt><dd>{promoStatus(promo, today) === "check" ? `Confirm dates with ${guide.bank}` : <>Listed until <time dateTime={promo.endDate!}>{formatPromoDate(promo.endDate, guide.bank)}</time></>}</dd></div>
                       </dl>
                       {promo.offerUrl ? <a className={styles.officialLink} href={promo.offerUrl} target="_blank" rel="noopener noreferrer" aria-label={`View official ${guide.bank} offer: ${promo.promo} (opens in a new tab)`}>View official {guide.bank} offer <ExternalLink size={15} aria-hidden="true" /></a> : <span className={styles.missingLink}>Official link unavailable</span>}

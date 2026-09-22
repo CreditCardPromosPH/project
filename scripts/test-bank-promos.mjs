@@ -37,8 +37,10 @@ test("bank selection excludes debit-only records and duplicate source URLs", () 
     promo, { ...promo, id: "duplicate" }, { ...promo, bank: "BPI" },
     { ...promo, id: "debit", offerUrl: "https://www.deals.bdo.com.ph/deal-welcome/2", cardTypes: "Debit cards" },
     { ...promo, id: "mixed", offerUrl: "https://www.deals.bdo.com.ph/deal-welcome/3", cardTypes: "Credit cards; Debit cards" },
+    { ...promo, id: "named-card", offerUrl: "https://www.deals.bdo.com.ph/deal-welcome/4", cardTypes: "Visa Signature" },
+    { ...promo, id: "unknown-card", offerUrl: "https://www.deals.bdo.com.ph/deal-welcome/5", cardTypes: "" },
   ], "BDO", today);
-  assert.deepEqual(results.map((p) => p.id).sort(), ["mixed", "one"]);
+  assert.deepEqual(results.map((p) => p.id).sort(), ["mixed", "named-card", "one", "unknown-card"]);
 });
 
 test("category counts can overlap while cards do not repeat; empty categories disappear", () => {
