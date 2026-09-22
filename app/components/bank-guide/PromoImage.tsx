@@ -3,9 +3,9 @@
 import { useState } from "react";
 import styles from "./page.module.css";
 
-export default function PromoImage({ src, alt }: { src: string; alt: string }) {
+export default function PromoImage({ src, alt, bank }: { src: string; alt: string; bank: string }) {
   const [failed, setFailed] = useState(false);
-  if (!src || failed) return <div className={styles.imageFallback} aria-hidden="true">BDO</div>;
+  if (!src || failed) return <div className={styles.imageFallback} aria-hidden="true">{bank}</div>;
   return (
     // Preserve the bank's original creative, including text near its edges.
     // eslint-disable-next-line @next/next/no-img-element

@@ -20,6 +20,8 @@
 .snapshot dt { font-size: 14px; color: var(--muted); }
 .snapshot dd { margin: 0; font-size: 28px; line-height: 1.1; font-weight: 700; font-variant-numeric: tabular-nums; }
 .snapshot p { margin: 16px 0 0; font-size: 14px; color: var(--muted); }
+.snapshot p a { color: var(--blue-dark); font-weight: 700; }
+.snapshot p a:hover { text-decoration: underline; }
 .categories { display: flex; flex-wrap: wrap; gap: 4px 24px; padding: 10px 0; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
 .categories a { display: inline-flex; align-items: center; gap: 6px; min-height: 40px; color: var(--blue-dark); font-size: 15px; font-weight: 700; }
 .categories a:hover { text-decoration: underline; }

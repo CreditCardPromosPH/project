@@ -11,6 +11,7 @@ import {
 } from "lucide-react";
 import metaJson from "../data/meta.json";
 import promoDataJson from "../data/promos.json";
+import { bankPagePath } from "../lib/bank-guide";
 
 type Promo = {
   id: string;
@@ -242,8 +243,8 @@ export default function CreditCardPromosPhilippinesPage() {
           <nav className="guide-page-nav" aria-label="Primary navigation">
             <Link href="/">Home</Link>
             <Link href="/guides">Guides</Link>
-            <a href="/privacy-policy">Privacy</a>
-            <a href="/terms-of-use">Terms</a>
+            <Link href="/privacy-policy">Privacy</Link>
+            <Link href="/terms-of-use">Terms</Link>
           </nav>
         </div>
       </header>
@@ -344,7 +345,7 @@ export default function CreditCardPromosPhilippinesPage() {
           </div>
           <div className="bank-guide-list">
             {bankCounts.map(([bank, count]) => (
-              <a className="bank-guide-row" href={bank === "BDO" ? "/bdo-credit-card-promos-philippines" : directoryUrl({ bank })} key={bank}>
+              <a className="bank-guide-row" href={bankPagePath(bank)} key={bank}>
                 <span className="bank-dot" style={{ backgroundColor: bankColors[bank] ?? "#2457d6" }} />
                 <span>{bank}</span>
                 <strong>{count.toLocaleString()} listed promos</strong>

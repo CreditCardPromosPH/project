@@ -35,9 +35,9 @@ export function promoStatus(promo: BankPromo, today: string) {
   return "current";
 }
 
-export function formatPromoDate(value: string | null) {
+export function formatPromoDate(value: string | null, bank = "the bank") {
   const day = calendarDate(value);
-  if (!day) return "Confirm dates with BDO";
+  if (!day) return `Confirm dates with ${bank}`;
   return new Intl.DateTimeFormat("en-PH", {
     timeZone: "UTC", month: "short", day: "numeric", year: "numeric",
   }).format(new Date(`${day}T00:00:00Z`));

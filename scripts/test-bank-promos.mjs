@@ -1,5 +1,7 @@
 import assert from "node:assert/strict";
 import test from "node:test";
+import meta from "../app/data/meta.json" with { type: "json" };
+import { bankGuideForSlug, bankGuides, bankPagePath } from "../app/lib/bank-guide.ts";
 import { bankDirectoryUrl, bankPromosForPage, manilaDate, promoStatus, selectCategoryPromos } from "../app/lib/bank-promos.ts";
 
 const today = "2026-09-22";
@@ -54,4 +56,14 @@ test("view-all links preserve both directory filters", () => {
   assert.equal(link.searchParams.get("bank"), "BDO");
   assert.equal(link.searchParams.get("category"), "Installments & Financing");
   assert.equal(link.hash, "#top");
+});
+
+test("every directory bank has a stable guide path", () => {
+  assert.deepEqual(bankGuides.map((guide) => guide.bank), meta.banks);
+  for (const bank of meta.banks) {
+    const path = bankPagePath(bank);
+    const slug = path.slice(1);
+    assert.equal(bankGuideForSlug(slug)?.bank, bank);
+    assert.match(path, new RegExp(`^/[a-z0-9-]+-credit-card-promos-philippines$`));
+  }
 });

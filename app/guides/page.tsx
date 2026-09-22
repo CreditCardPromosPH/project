@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { ArrowRight, BookOpen, CalendarDays } from "lucide-react";
 import metaJson from "../data/meta.json";
+import { bankGuides } from "../lib/bank-guide";
 
 type PromoMeta = {
   checkedAt: string;
@@ -21,14 +22,13 @@ function formatLongDate(value: string) {
 }
 
 const articles = [
-  {
-    title: "BDO Credit Card Promos Philippines",
-    description:
-      "Browse BDO offers by category, compare listed dates and card types, and check the official terms before you spend.",
-    href: "/bdo-credit-card-promos-philippines",
+  ...bankGuides.map((guide) => ({
+    title: guide.title.replace(" | Current Offers", ""),
+    description: `Browse ${guide.bank} offers by category, compare listed dates and card types, and check the official terms before you spend.`,
+    href: guide.path,
     updated: formatLongDate(promoMeta.checkedAt),
-    kicker: "BDO promo guide",
-  },
+    kicker: `${guide.bank} promo guide`,
+  })),
   {
     title: "Credit Card Promos Philippines: Best Current Offers",
     description:
