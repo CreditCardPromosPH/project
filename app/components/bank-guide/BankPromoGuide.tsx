@@ -16,6 +16,9 @@ const categoryDefinitions = [
   { id: "installments", label: "Installments", category: "Installments & Financing", description: "Installment and Buy Now Pay Later offers for planned purchases. Confirm the available payment terms, minimum purchase, fees, and first payment date with the bank and merchant." },
   { id: "online", label: "Online", category: "Online", description: "Online shopping and booking offers. Check for a promo code, designated checkout link, card-network restriction, or limit on redemptions." },
   { id: "welcome-gifts", label: "Welcome gifts", category: "Welcome Gift", description: "Card acquisition and welcome offers. Read the definition of an eligible new cardholder, the application and approval dates, and the qualifying spend period." },
+  { id: "health-wellness", label: "Health & wellness", category: "Health & Wellness", description: "Health, wellness, beauty, and personal care offers. Check participating providers, covered services, and any appointment or payment requirements." },
+  { id: "services", label: "Services", category: "Services", description: "Service-related discounts and cardholder privileges. Confirm the participating provider, booking process, and exclusions before using the offer." },
+  { id: "other", label: "Other offers", category: "Other", description: "Additional bank promotions that do not fit the main categories. Review the official terms for the exact benefit and eligibility rules." },
 ];
 
 function questionsFor(bank: string) {
