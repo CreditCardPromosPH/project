@@ -17,6 +17,7 @@
 .snapshot { padding: 20px 0; }
 .snapshot dl { display: flex; margin: 0; }
 .snapshot dl > div { display: flex; flex-direction: column-reverse; gap: 4px; }
+.snapshot dl > div + div { margin-left: 48px; padding-left: 24px; border-left: 1px solid var(--line); }
 .snapshot dt { font-size: 14px; color: var(--muted); }
 .snapshot dd { margin: 0; font-size: 28px; line-height: 1.1; font-weight: 700; font-variant-numeric: tabular-nums; }
 .snapshot p { margin: 16px 0 0; font-size: 14px; color: var(--muted); }
@@ -74,6 +75,7 @@
   .intro h1 { font-size: 30px; }
   .lede { font-size: 16px; }
   .snapshot dd { font-size: 25px; }
+  .snapshot dl > div + div { margin-left: 24px; padding-left: 14px; }
   .categories { gap: 2px 18px; }
   .promoGrid, .checklist { grid-template-columns: 1fr; }
   .page h2 { font-size: 23px; }

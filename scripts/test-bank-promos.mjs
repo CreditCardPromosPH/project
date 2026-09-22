@@ -2,7 +2,8 @@ import assert from "node:assert/strict";
 import test from "node:test";
 import meta from "../app/data/meta.json" with { type: "json" };
 import { bankGuideForSlug, bankGuides, bankPagePath } from "../app/lib/bank-guide.ts";
-import { bankDirectoryUrl, bankPromosForPage, manilaDate, promoStatus, selectCategoryPromos } from "../app/lib/bank-promos.ts";
+import { categoryGuideForSlug, categoryGuides } from "../app/lib/category-guide.ts";
+import { bankDirectoryUrl, bankPromosForPage, currentPromosForPage, manilaDate, promoStatus, selectCategoryPromos } from "../app/lib/bank-promos.ts";
 
 const today = "2026-09-22";
 const promo = {
@@ -68,4 +69,16 @@ test("every directory bank has a stable guide path", () => {
     assert.equal(bankGuideForSlug(slug)?.bank, bank);
     assert.match(path, new RegExp(`^/[a-z0-9-]+-credit-card-promos-philippines$`));
   }
+});
+
+test("category landing pages have stable slugs and useful content", () => {
+  assert.deepEqual(categoryGuides.map((guide) => guide.category), ["Travel & Leisure", "Dining", "Installments & Financing", "Shopping"]);
+  for (const guide of categoryGuides) {
+    assert.match(guide.path, /^\/[a-z0-9-]+-credit-card-promos-philippines$/);
+    assert.equal(categoryGuideForSlug(guide.slug)?.category, guide.category);
+    assert.ok(guide.intro.length > 100);
+    assert.equal(guide.checklist.length, 4);
+    assert.equal(guide.questions.length, 3);
+  }
+  assert.ok(currentPromosForPage([{ ...promo, categories: ["Dining"] }], today).length > 0);
 });

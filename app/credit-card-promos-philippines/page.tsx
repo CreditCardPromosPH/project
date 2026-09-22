@@ -12,6 +12,7 @@ import {
 import metaJson from "../data/meta.json";
 import promoDataJson from "../data/promos.json";
 import { bankPagePath } from "../lib/bank-guide";
+import { categoryGuides as categoryPageGuides } from "../lib/category-guide";
 
 type Promo = {
   id: string;
@@ -112,6 +113,8 @@ const categoryGuides = [
     query: "online credit card promos Philippines",
   },
 ];
+
+const categoryPagePaths = new Map(categoryPageGuides.map((guide) => [guide.category, guide.path]));
 
 function formatDate(value: string | null) {
   if (!value) return "Check bank page";
@@ -320,7 +323,7 @@ export default function CreditCardPromosPhilippinesPage() {
 
           <div className="category-guide-grid">
             {featuredByCategory.map((guide) => (
-              <a className="category-guide-card" href={directoryUrl({ category: guide.category })} key={guide.category}>
+              <a className="category-guide-card" href={categoryPagePaths.get(guide.category) ?? directoryUrl({ category: guide.category })} key={guide.category}>
                 <span className="guide-card-count">
                   {(categoryCounts.find(([category]) => category === guide.category)?.[1] ?? 0).toLocaleString()} offers
                 </span>

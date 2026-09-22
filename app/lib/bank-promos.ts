@@ -50,12 +50,16 @@ export function bankDirectoryUrl(bank: string, category?: string) {
 }
 
 export function bankPromosForPage(promos: BankPromo[], bank: string, today: string) {
+  return currentPromosForPage(promos.filter((promo) => promo.bank === bank), today);
+}
+
+export function currentPromosForPage(promos: BankPromo[], today: string) {
   const seen = new Set<string>();
   return promos.filter((promo) => {
     const cardTypes = promo.cardTypes.toLowerCase();
     const hasDebitOnlyLabel = cardTypes.includes("debit")
       && !/(credit|visa|mastercard|jcb|unionpay|american express|amex)/.test(cardTypes);
-    if (promo.bank !== bank || hasDebitOnlyLabel) return false;
+    if (hasDebitOnlyLabel) return false;
     const status = promoStatus(promo, today);
     if (status === "expired" || status === "upcoming") return false;
     const key = promo.offerUrl || promo.id;

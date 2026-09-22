@@ -3,6 +3,7 @@ import Link from "next/link";
 import { ArrowRight, BookOpen, CalendarDays } from "lucide-react";
 import metaJson from "../data/meta.json";
 import { bankGuides } from "../lib/bank-guide";
+import { categoryGuides } from "../lib/category-guide";
 
 type PromoMeta = {
   checkedAt: string;
@@ -28,6 +29,13 @@ const articles = [
     href: guide.path,
     updated: formatLongDate(promoMeta.checkedAt),
     kicker: `${guide.bank} promo guide`,
+  })),
+  ...categoryGuides.map((guide) => ({
+    title: guide.title.replace(" | Current Offers", ""),
+    description: guide.description,
+    href: guide.path,
+    updated: formatLongDate(promoMeta.checkedAt),
+    kicker: `${guide.label} promo guide`,
   })),
   {
     title: "Credit Card Promos Philippines: Best Current Offers",
