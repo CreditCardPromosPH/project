@@ -10,12 +10,12 @@ import styles from "./page.module.css";
 const siteUrl = "https://www.creditcardpromos.ph";
 const pagePath = "/bdo-credit-card-promos-philippines";
 const title = "BDO Credit Card Promos Philippines | Current Offers";
-const description = "Compare BDO credit card promos for dining, shopping, travel, installments, and more. Browse offers by category and check dates, eligible cards, and official terms.";
+const description = "Compare current BDO credit card promos for dining, shopping, travel, installments, and more. Check offer dates, eligible cards, and official BDO terms.";
 
 export const metadata: Metadata = {
   title, description,
   alternates: { canonical: pagePath },
-  openGraph: { title, description, url: `${siteUrl}${pagePath}`, siteName: "CreditCardPromos.ph", type: "website" },
+  openGraph: { title, description, url: `${siteUrl}${pagePath}`, siteName: "CreditCardPromos.ph", locale: "en_PH", type: "website" },
   twitter: { card: "summary", title, description },
 };
 
@@ -29,7 +29,7 @@ const categories = [
 ];
 
 const questions = [
-  { question: "What BDO credit card promos are available?", answer: "The category sections above show offers from our BDO directory. Listings, counts, and dates update with our daily data refresh. The full directory also includes other BDO offers that are not shown in these selections." },
+  { question: "What BDO credit card promos are currently available?", answer: "This page tracks current BDO dining, travel, shopping, online, installment, and welcome gift promotions. Listings, counts, and dates update with our daily data refresh. The full directory includes other BDO offers that are not shown in the category selections." },
   { question: "Do all BDO credit cards qualify for every promo?", answer: "No. Our BDO listings include offers described as JCB Platinum, UnionPay, American Express, and BDO Elite exclusives. Check the exact card name, network, and tier in the official terms; a BDO card alone does not establish eligibility." },
   { question: "Do I need to register for a BDO promo?", answer: "Registration and redemption requirements depend on the offer. Before paying, check the official BDO terms for any registration step, promo code, designated booking link, or qualifying purchase channel." },
   { question: "Are BDO debit cards included?", answer: "This page selects listings tagged for credit cards. Some also include debit cards, as indicated on the card. These are broad categories from the source data; the official terms identify the specific eligible cards." },
@@ -40,13 +40,22 @@ export default function BdoPromosPage() {
   const today = manilaDate();
   const promos = bankPromosForPage(promosJson, "BDO", today);
   const sections = selectCategoryPromos(promos, categories);
+  const visiblePromos = sections.flatMap((section) => section.cards);
   const structuredData = [
-    { "@context": "https://schema.org", "@type": "CollectionPage", name: title, description, url: `${siteUrl}${pagePath}`, dateModified: meta.checkedAt,
-      publisher: { "@type": "Organization", name: "CreditCardPromos.ph", url: siteUrl } },
+    { "@context": "https://schema.org", "@type": "CollectionPage", "@id": `${siteUrl}${pagePath}#webpage`, name: title, headline: "BDO Credit Card Promos Philippines", description, url: `${siteUrl}${pagePath}`, inLanguage: "en-PH", dateModified: meta.checkedAt,
+      isPartOf: { "@type": "WebSite", "@id": `${siteUrl}/#website`, name: "CreditCardPromos.ph", url: siteUrl },
+      about: { "@type": "Thing", name: "BDO credit card promotions in the Philippines" },
+      mainEntity: { "@id": `${siteUrl}${pagePath}#promo-list` },
+      publisher: { "@type": "Organization", "@id": `${siteUrl}/#organization`, name: "CreditCardPromos.ph", url: siteUrl } },
+    { "@context": "https://schema.org", "@type": "ItemList", "@id": `${siteUrl}${pagePath}#promo-list`, name: "Current BDO credit card promos", numberOfItems: visiblePromos.length,
+      itemListElement: visiblePromos.map((promo, index) => ({ "@type": "ListItem", position: index + 1, item: { "@type": "Thing", name: promo.promo, ...(promo.offerUrl ? { url: promo.offerUrl } : {}) } })) },
     { "@context": "https://schema.org", "@type": "BreadcrumbList", itemListElement: [
       { "@type": "ListItem", position: 1, name: "Home", item: siteUrl },
       { "@type": "ListItem", position: 2, name: "BDO credit card promos", item: `${siteUrl}${pagePath}` },
     ] },
+    { "@context": "https://schema.org", "@type": "FAQPage", mainEntity: questions.map(({ question, answer }) => ({
+      "@type": "Question", name: question, acceptedAnswer: { "@type": "Answer", text: answer },
+    })) },
   ];
 
   return (
@@ -83,7 +92,7 @@ export default function BdoPromosPage() {
           <dl>
             <div><dt>BDO offers listed</dt><dd>{promos.length.toLocaleString()}</dd></div>
           </dl>
-          <p>Some offers include debit cards. Check the specific eligible card and terms on BDO&apos;s offer page.</p>
+          <p>Some offers include debit cards. The sections below show up to three recent listings per category; <a href={bankDirectoryUrl("BDO")}>browse the complete BDO directory</a> for all matching offers and check the specific eligible card and terms on BDO&apos;s official offer page.</p>
         </section>
 
         {sections.length > 0 ? <>
@@ -99,7 +108,7 @@ export default function BdoPromosPage() {
               <div className={styles.promoGrid}>
                 {section.cards.map((promo) => (
                   <article className={styles.promoCard} key={promo.id}>
-                    <div className={styles.promoMedia}><PromoImage src={promo.imageUrl} /></div>
+                    <div className={styles.promoMedia}><PromoImage src={promo.imageUrl} alt={`BDO credit card promo: ${promo.promo}`} /></div>
                     <div className={styles.cardBody}>
                       <h3>{promo.promo}</h3>
                       {promo.summary && <p>{promo.summary}</p>}
@@ -120,7 +129,7 @@ export default function BdoPromosPage() {
         <p className={styles.note}>Category totals can overlap because an offer may have more than one category. <a href={bankDirectoryUrl("BDO")}>Browse the complete BDO directory</a> for more listings.</p>
 
         <section className={styles.editorial} aria-labelledby="eligibility-heading">
-          <div><p className={styles.kicker}>Before you pay</p><h2 id="eligibility-heading">Check the terms for your BDO card</h2></div>
+          <div><p className={styles.kicker}>Before you pay</p><h2 id="eligibility-heading">How BDO credit card promos work</h2></div>
           <div className={styles.checklist}>
             <div><h3>Match the card, network, and tier</h3><p>A JCB Platinum exclusive or UnionPay offer may not apply to another BDO card. Confirm the exact eligible cards and whether supplementary cardholders qualify.</p></div>
             <div><h3>Check the purchase conditions</h3><p>Look for a minimum spend, maximum discount, participating branches, and excluded items. Confirm whether the required spend is in one receipt or accumulated across transactions.</p></div>
@@ -130,12 +139,12 @@ export default function BdoPromosPage() {
         </section>
 
         <section className={styles.editorial} aria-labelledby="compare-heading">
-          <h2 id="compare-heading">Choosing between BDO offers</h2>
+          <h2 id="compare-heading">How to choose the right BDO promo</h2>
           <div className={styles.copy}><p>Start with a purchase you already plan to make. For dining, compare the final bill after any discount cap and minimum spend. For travel, compare the total booking cost and the available dates. For installments, check the total amount payable and the payment schedule.</p><p>Our selection is organized by category and favors recently added listings with usable dates. It is not a ranking of the best deals. For offers from other banks, visit our <Link href="/credit-card-promos-philippines">Philippine credit card promo guide</Link>.</p></div>
         </section>
 
         <section className={styles.editorial} aria-labelledby="faq-heading">
-          <h2 id="faq-heading">BDO promo questions</h2>
+          <h2 id="faq-heading">Frequently asked questions about BDO promos</h2>
           <div className={styles.faq}>{questions.map(({ question, answer }) => <details key={question}><summary>{question}</summary><p>{answer}</p></details>)}</div>
         </section>
 
