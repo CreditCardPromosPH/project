@@ -22,6 +22,14 @@ function formatLongDate(value: string) {
 
 const articles = [
   {
+    title: "BDO Credit Card Promos Philippines",
+    description:
+      "Browse BDO offers by category, compare listed dates and card types, and check the official terms before you spend.",
+    href: "/bdo-credit-card-promos-philippines",
+    updated: formatLongDate(promoMeta.checkedAt),
+    kicker: "BDO promo guide",
+  },
+  {
     title: "Credit Card Promos Philippines: Best Current Offers",
     description:
       "A practical guide to comparing Philippine credit card promos by bank, promo type, reward value, and expiry date.",

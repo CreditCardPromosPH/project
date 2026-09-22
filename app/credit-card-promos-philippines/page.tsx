@@ -344,7 +344,7 @@ export default function CreditCardPromosPhilippinesPage() {
           </div>
           <div className="bank-guide-list">
             {bankCounts.map(([bank, count]) => (
-              <a className="bank-guide-row" href={directoryUrl({ bank })} key={bank}>
+              <a className="bank-guide-row" href={bank === "BDO" ? "/bdo-credit-card-promos-philippines" : directoryUrl({ bank })} key={bank}>
                 <span className="bank-dot" style={{ backgroundColor: bankColors[bank] ?? "#2457d6" }} />
                 <span>{bank}</span>
                 <strong>{count.toLocaleString()} listed promos</strong>

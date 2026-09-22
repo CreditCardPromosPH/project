@@ -1,0 +1,83 @@
+.page { background: var(--page); color: var(--ink); line-height: 1.55; letter-spacing: 0; }
+.page a:focus-visible, .page summary:focus-visible { outline: 3px solid var(--blue); outline-offset: 5px; }
+.header .headerInner { width: min(100% - 48px, 1180px); gap: 24px; }
+.headerNav { margin-left: auto; display: flex; gap: 26px; font-weight: 700; }
+.headerNav a:hover, .breadcrumbs a:hover { color: var(--blue); text-decoration: underline; }
+.content { width: min(100% - 48px, 1180px); margin: auto; padding: 24px 0 0; }
+.breadcrumbs { display: flex; align-items: center; gap: 8px; font-size: 14px; color: var(--muted); }
+.intro { margin: 24px 0 0; padding: 0 0 24px; border-bottom: 3px solid #eebd38; }
+.kicker { color: var(--blue-dark); font-size: 14px; font-weight: 700; margin: 0 0 8px; }
+.intro h1 { font-size: 38px; line-height: 1.15; max-width: 850px; text-wrap: balance; }
+.lede { max-width: 800px; color: #52627b; margin: 14px 0 18px; font-size: 17px; }
+.introLinks { display: flex; flex-wrap: wrap; gap: 12px 28px; font-size: 14px; }
+.introLinks > span, .introLinks > a { display: inline-flex; flex-wrap: wrap; align-items: center; gap: 6px; }
+.introLinks > span { color: var(--muted); }
+.introLinks a, .viewAll, .officialLink, .copy a, .note a { color: var(--blue-dark); font-weight: 700; }
+.introLinks a:hover, .viewAll:hover, .officialLink:hover, .copy a:hover, .note a:hover { text-decoration: underline; }
+.snapshot { padding: 20px 0; }
+.snapshot dl { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); margin: 0; gap: 20px; }
+.snapshot dl > div { display: flex; flex-direction: column-reverse; gap: 4px; border-left: 1px solid var(--line); padding-left: 24px; }
+.snapshot dl > div:first-child { padding-left: 0; border: 0; }
+.snapshot dt { font-size: 14px; color: var(--muted); }
+.snapshot dd { margin: 0; font-size: 28px; line-height: 1.1; font-weight: 700; font-variant-numeric: tabular-nums; }
+.snapshot p { margin: 16px 0 0; font-size: 14px; color: var(--muted); }
+.categories { display: flex; flex-wrap: wrap; gap: 4px 24px; padding: 10px 0; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+.categories a { display: inline-flex; align-items: center; gap: 6px; min-height: 40px; color: var(--blue-dark); font-size: 15px; font-weight: 700; }
+.categories a:hover { text-decoration: underline; }
+.category { padding: 32px 0; border-bottom: 1px solid var(--line); scroll-margin-top: 100px; }
+.sectionHeading { display: flex; align-items: flex-start; justify-content: space-between; gap: 24px; margin-bottom: 20px; }
+.sectionHeading > div { max-width: 720px; }
+.page h2 { margin: 0; font-size: 26px; line-height: 1.25; text-wrap: balance; }
+.sectionHeading p { margin: 8px 0 0; color: #52627b; }
+.viewAll { display: inline-flex; align-items: center; gap: 8px; flex-shrink: 0; max-width: 240px; font-size: 14px; min-height: 40px; }
+.viewAll svg, .officialLink svg { flex-shrink: 0; }
+.promoGrid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 20px; }
+.promoCard { min-width: 0; display: flex; flex-direction: column; overflow: hidden; border: 1px solid var(--line); border-radius: 8px; background: var(--surface); }
+.promoMedia { aspect-ratio: 684 / 278; overflow: hidden; background: #edf1f5; }
+.promoImage { display: block; width: 100%; height: 100%; object-fit: contain; }
+.imageFallback { height: 100%; display: grid; place-items: center; background: #f3f6fa; color: #12337d; font-size: 36px; font-weight: 800; }
+.cardBody { flex: 1; display: flex; flex-direction: column; padding: 20px; }
+.cardBody h3 { margin: 0; font-size: 18px; line-height: 1.4; overflow-wrap: anywhere; }
+.cardBody > p { margin: 10px 0 18px; color: #52627b; font-size: 16px; overflow-wrap: anywhere; }
+.cardDetails { display: grid; gap: 8px; padding-top: 20px; margin: auto 0 18px; color: #56657c; font-size: 14px; }
+.cardDetails > div { display: flex; gap: 8px; align-items: flex-start; }
+.cardDetails dt { padding-top: 3px; }
+.cardDetails dd { margin: 0; }
+.officialLink { display: inline-flex; align-items: center; justify-content: space-between; gap: 10px; border-top: 1px solid var(--line); padding-top: 14px; font-size: 14px; }
+.missingLink { color: var(--muted); font-size: 14px; }
+.note { margin: 18px 0 0; font-size: 14px; color: var(--muted); }
+.editorial { display: grid; grid-template-columns: 280px minmax(0, 1fr); gap: 40px; padding: 40px 0; border-bottom: 1px solid var(--line); }
+.editorial h2 { font-size: 24px; }
+.checklist { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px; }
+.checklist h3 { margin: 0 0 6px; font-size: 17px; }
+.checklist p, .copy p { margin: 0; color: #52627b; }
+.copy p + p { margin-top: 14px; }
+.faq details { border-bottom: 1px solid var(--line); }
+.faq details:first-child { border-top: 1px solid var(--line); }
+.faq summary { padding: 16px 4px; font-weight: 700; cursor: pointer; }
+.faq p { margin: 0; padding: 0 4px 18px; color: #52627b; }
+.footer { width: min(100% - 48px, 1180px); display: flex; flex-wrap: wrap; gap: 12px 24px; margin: auto; padding: 26px 0 40px; font-size: 14px; color: var(--muted); }
+.footer a:hover { text-decoration: underline; }
+.srOnly, .skipLink:not(:focus) { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+.skipLink:focus { position: fixed; top: 12px; left: 12px; z-index: 100; padding: 12px; background: white; }
+@media (max-width: 900px) {
+  .promoGrid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .sectionHeading { flex-direction: column; gap: 8px; }
+  .editorial { grid-template-columns: 1fr; gap: 22px; }
+}
+@media (max-width: 560px) {
+  .header .headerInner, .content, .footer { width: calc(100% - 32px); }
+  .header .headerInner { flex-wrap: wrap; justify-content: space-between; gap: 8px 16px; padding: 12px 0; }
+  .headerNav { font-size: 14px; gap: 16px; margin-left: 0; }
+  .intro { margin-top: 20px; }
+  .intro h1 { font-size: 30px; }
+  .lede { font-size: 16px; }
+  .snapshot dl { gap: 10px; }
+  .snapshot dl > div { padding-left: 10px; }
+  .snapshot dd { font-size: 25px; }
+  .categories { gap: 2px 18px; }
+  .promoGrid, .checklist { grid-template-columns: 1fr; }
+  .page h2 { font-size: 23px; }
+  .category { padding: 26px 0; scroll-margin-top: 130px; }
+  .editorial { padding: 30px 0; }
+}
